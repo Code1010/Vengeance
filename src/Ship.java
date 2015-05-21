@@ -3,6 +3,8 @@ import java.awt.Color;
 
 public class Ship {
 
+	public static final double PHOTON_DAMAGE = 25;
+	
 	/*
 	 * location in the universe
 	 */
@@ -20,6 +22,7 @@ public class Ship {
 	private boolean warpDrive;
 	private double maxWarp;
 	private int impulseThrusters;
+	private double velocity;
 	
 	/*
 	 * detection
@@ -39,6 +42,7 @@ public class Ship {
 	/*
 	 * offensive
 	 */
+	private int maxPhaserLevel;
 	private boolean phaserBanks;
 	private boolean photonTorps;
 	private int numPhotons;
@@ -84,8 +88,7 @@ public class Ship {
 			boolean backup, boolean hackingStation, int hackerQuality,
 			String hullMaterial, int hullStrength, int hullWeight,
 			Color hullColor, String name, String captainName,
-			String federationID) {
-		super();
+			String federationID, int maxPL) {
 		this.sections = sections;
 		this.impulseEngines = impulseEngines;
 		this.warpDrive = warpDrive;
@@ -117,6 +120,8 @@ public class Ship {
 		this.name = name;
 		this.captainName = captainName;
 		this.federationID = federationID;
+		velocity = 0;
+		maxPhaserLevel = maxPL;
 	}
 	
 	//the vengeance should use this one
@@ -136,11 +141,11 @@ public class Ship {
 		phaserBanks = true;
 		photonTorps = true;
 		numPhotons = 640;
-		phaserLevel = 20;
+		phaserLevel = 80;
 		phaserRecharge = 20;
 		photonReload = 5; //lower is better
 		autoTarget = true;
-		autoTargetLevel = 20;
+		autoTargetLevel = 80;
 		smartRepair = true;
 		backupComputer = true;
 		hackingStation = true;
@@ -152,6 +157,8 @@ public class Ship {
 		name = "USS VENGEANCE";
 		captainName = "Khan Noonien Singh";
 		federationID = "Unknown";		
+		velocity = 0;
+		maxPhaserLevel = 1000;
 	}
 
 	public boolean isSections() {
@@ -408,5 +415,21 @@ public class Ship {
 
 	public void setSector(int sector) {
 		this.sector = sector;
+	}
+
+	public double getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(double velocity) {
+		this.velocity = velocity;
+	}
+
+	public int getMaxPhaserLevel() {
+		return maxPhaserLevel;
+	}
+
+	public void setMaxPhaserLevel(int maxPhaserLevel) {
+		this.maxPhaserLevel = maxPhaserLevel;
 	}
 }
