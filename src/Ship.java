@@ -141,11 +141,11 @@ public class Ship {
 		phaserBanks = true;
 		photonTorps = true;
 		numPhotons = 640;
-		phaserLevel = 80;
+		phaserLevel = 85;
 		phaserRecharge = 20;
 		photonReload = 5; //lower is better
 		autoTarget = true;
-		autoTargetLevel = 80;
+		autoTargetLevel = 85;
 		smartRepair = true;
 		backupComputer = true;
 		hackingStation = true;
@@ -225,7 +225,7 @@ public class Ship {
 		this.shieldGenerator = shieldGenerator;
 	}
 
-	public boolean isSecondaryShieldGenerator() {
+	public boolean hasSecondaryShieldGenerator() {
 		return secondaryShieldGenerator;
 	}
 

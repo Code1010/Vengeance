@@ -139,7 +139,7 @@ public class PlayerShip extends Ship {
 		if((getNumPhotons() > 0) && photonHealth > 0){
 			if (hasAutoTarget()) {
 				double rand = 100 * Math.random();
-				if (getAutoTargetLevel() <= rand) {
+				if (getAutoTargetLevel() >= rand) {
 					setNumPhotons(getNumPhotons()-1);
 					return "<<Photon torpedo fired successfully and hit the "
 							+ targetRandomSystem(Ship.PHOTON_DAMAGE) + ">>";
@@ -161,19 +161,15 @@ public class PlayerShip extends Ship {
 			return "<<Photon torpedo bays nonfunctional or toepedoes unavailable>>";
 		}
 	}
-	
-	/*
-	 * THIS IS NOT DONE!
-	 * You should work on this first the next time your work on this, dad.
-	 */
+
 	public String firePhotons(String system){
 		if((getNumPhotons() > 0) && photonHealth > 0){
 			if (hasAutoTarget()) {
 				double rand = 100 * Math.random();
-				if (getAutoTargetLevel() <= rand) {
+				if (getAutoTargetLevel() >= rand) {
 					setNumPhotons(getNumPhotons()-1);
 					return "<<Photon torpedo fired successfully and hit the "
-							+ targetRandomSystem(Ship.PHOTON_DAMAGE) + ">>";
+							+ vengeanceObject.damageVengeance(Ship.PHOTON_DAMAGE, system) + ">>";
 				} else {
 					setNumPhotons(getNumPhotons()-1);
 					return "<<Photon torpedo fired successfully, but missed the target>>";
@@ -182,7 +178,7 @@ public class PlayerShip extends Ship {
 				if (Math.random() > .745) {
 					setNumPhotons(getNumPhotons()-1);
 					return "<<Photon torpedo fired successfully and hit the "
-							+ targetRandomSystem(Ship.PHOTON_DAMAGE) + ">>";
+							+ vengeanceObject.damageVengeance(Ship.PHOTON_DAMAGE, system) + ">>";
 				} else {
 					setNumPhotons(getNumPhotons()-1);
 					return "<<Photon torpedo fired successfully, but missed the target>>";
