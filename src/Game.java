@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 public class Game extends JPanel {
 
 	public static void main(String [] args) throws InterruptedException{
-		JFrame frame = new JFrame("Vengeance");
+		JFrame frame = new JFrame("Vengeance HUD");
 		Game window = new Game();
 		frame.add(window);
 		
@@ -33,7 +33,7 @@ public class Game extends JPanel {
 			e.printStackTrace();
 		}
 		
-		frame.setSize(907, 550);
+		frame.setSize(700, 450); //after a lot of back and forth, i've decided on a pleasing window size
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
@@ -44,10 +44,7 @@ public class Game extends JPanel {
 	public void paint(Graphics g){
 		super.paint(g);
 		Graphics2D gd = (Graphics2D) g;
-		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		//paint stuff hear
-		
+		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);		
 	}
 	
 }
