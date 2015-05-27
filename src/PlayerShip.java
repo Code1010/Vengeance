@@ -1,9 +1,25 @@
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class PlayerShip extends Ship {
-
+	
+	/*
+	 * there's some formatting that might get mangled here....
+	 */
+									// 00   01      02
 	boolean[][] sectionsSealed = { { false, false, false },
 			{ false, false, false }, { false, false, false } };
+			//10      11     12         20     21      22
+	ArrayList<Crewmember> nearBridge = new ArrayList<Crewmember>(); // 0 0
+	ArrayList<Crewmember> nearWarpDrive = new ArrayList<Crewmember>(); // 0 1
+	ArrayList<Crewmember> nearImpulseEngines = new ArrayList<Crewmember>(); // 0 2
+	ArrayList<Crewmember> nearSensors = new ArrayList<Crewmember>(); // 1 0
+	ArrayList<Crewmember> nearPhasers = new ArrayList<Crewmember>(); // 1 1
+	ArrayList<Crewmember> nearPhotons = new ArrayList<Crewmember>(); // 1 2
+	ArrayList<Crewmember> nearShieldGen = new ArrayList<Crewmember>(); // 2 0
+	ArrayList<Crewmember> nearComputer = new ArrayList<Crewmember>(); // 2 1
+	ArrayList<Crewmember> nearHull = new ArrayList<Crewmember>(); // 2 2
+	
 	private double impulseHealth;
 	private double warpHealth;
 	private double sensorHealth;
@@ -40,9 +56,8 @@ public class PlayerShip extends Ship {
 				hackingStation, hackerQuality, hullMaterial, hullStrength,
 				hullWeight, hullColor, name, captainName, federationID, maxPL);
 
-		impulseHealth = 100.0;
-		warpHealth = 100.0;
-		warpHealth = 100.0;
+		impulseHealth = 59.0;
+		warpHealth = 0;
 		sensorHealth = 100.0;
 		shieldGenHealth = 100.0;
 		secondShieldGenHealth = 100.0;
