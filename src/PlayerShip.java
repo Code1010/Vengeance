@@ -3,13 +3,8 @@ import java.util.ArrayList;
 
 public class PlayerShip extends Ship {
 	
-	/*
-	 * there's some formatting that might get mangled here....
-	 */
-									// 00   01      02
-	boolean[][] sectionsSealed = { { false, false, false },
-			{ false, false, false }, { false, false, false } };
-			//10      11     12         20     21      22
+	boolean[] sectionsSealed = {false, false, false, false, false, false, false};
+	
 	ArrayList<Crewmember> nearBridge = new ArrayList<Crewmember>(); // 0 0
 	ArrayList<Crewmember> nearWarpDrive = new ArrayList<Crewmember>(); // 0 1
 	ArrayList<Crewmember> nearImpulseEngines = new ArrayList<Crewmember>(); // 0 2
@@ -17,8 +12,6 @@ public class PlayerShip extends Ship {
 	ArrayList<Crewmember> nearPhasers = new ArrayList<Crewmember>(); // 1 1
 	ArrayList<Crewmember> nearPhotons = new ArrayList<Crewmember>(); // 1 2
 	ArrayList<Crewmember> nearShieldGen = new ArrayList<Crewmember>(); // 2 0
-	ArrayList<Crewmember> nearComputer = new ArrayList<Crewmember>(); // 2 1
-	ArrayList<Crewmember> nearHull = new ArrayList<Crewmember>(); // 2 2
 	
 	private double impulseHealth;
 	private double warpHealth;
@@ -34,6 +27,10 @@ public class PlayerShip extends Ship {
 	private boolean shieldsUp;
 	private double shieldIntegrity;
 	private USSVengeance vengeanceObject;
+	private double foreShields = 0.0;
+	private double aftShields = 0.0;
+	private double leftShields = 0.0;
+	private double rightShields = 0.0;
 
 	public PlayerShip(boolean sections, boolean impulseEngines,
 			boolean warpDrive, double maxWarp, int impulseThrusters,

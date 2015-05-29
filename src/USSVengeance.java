@@ -14,6 +14,7 @@ public class USSVengeance extends Ship{
 	private boolean captainAlive;
 	private double shieldIntegrity;
 	private boolean shieldsUp;
+	private double bearing;
 	
 	public USSVengeance(){
 		super();
@@ -100,6 +101,14 @@ public class USSVengeance extends Ship{
 		}
 		
 		return ret;
+	}
+
+	public double getBearing() {
+		return bearing;
+	}
+
+	public void setBearing(double bearing) {
+		this.bearing = bearing;
 	}
 	
 }
