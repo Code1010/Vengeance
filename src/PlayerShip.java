@@ -31,7 +31,37 @@ public class PlayerShip extends Ship {
 	private double aftShields;
 	private double leftShields;
 	private double rightShields;
-
+	
+	public PlayerShip(USSVengeance u){
+		super(true, true, true, 8.0, 120,
+				true, 100, true,
+				true, 100,
+				100, true, true,
+				true, 64, 100, 12,
+				560, true, 100, false, true,
+				false, 0, "Tritanium", 1500,
+				1500, Color.LIGHT_GRAY, "USS Enterprise", "James T. Kirk", "NCC 1701", 1500);
+		
+		vengeanceObject = u;
+		foreShields = 0.0;
+		aftShields = 0.0;
+		leftShields = 0.0;
+		rightShields = 0.0;
+		impulseHealth = 59.0;
+		warpHealth = 0;
+		sensorHealth = 100.0;
+		shieldGenHealth = 100.0;
+		secondShieldGenHealth = 100.0;
+		computerHealth = 100.0;
+		phaserHealth = 100.0;
+		photonHealth = 100.0;
+		hullIntegrity = 100.0;
+		crewAlive = true;
+		captainAlive = true;
+		shieldsUp = true;
+		shieldIntegrity = 100.0;
+	}
+	
 	public PlayerShip(boolean sections, boolean impulseEngines,
 			boolean warpDrive, double maxWarp, int impulseThrusters,
 			boolean sensorArray, int sensorArrayLevel, boolean shieldGenerator,

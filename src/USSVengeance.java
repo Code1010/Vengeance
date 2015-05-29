@@ -111,4 +111,108 @@ public class USSVengeance extends Ship{
 		this.bearing = bearing;
 	}
 	
+	public double getImpulseHealth() {
+		return impulseHealth;
+	}
+
+	public void setImpulseHealth(double impulseHealth) {
+		this.impulseHealth = impulseHealth;
+	}
+
+	public double getWarpHealth() {
+		return warpHealth;
+	}
+
+	public void setWarpHealth(double warpHealth) {
+		this.warpHealth = warpHealth;
+	}
+
+	public double getSensorHealth() {
+		return sensorHealth;
+	}
+
+	public void setSensorHealth(double sensorHealth) {
+		this.sensorHealth = sensorHealth;
+	}
+
+	public double getShieldGenHealth() {
+		return shieldGenHealth;
+	}
+
+	public void setShieldGenHealth(double shieldGenHealth) {
+		this.shieldGenHealth = shieldGenHealth;
+	}
+
+	public double getSecondShieldGenHealth() {
+		return secondShieldGenHealth;
+	}
+
+	public void setSecondShieldGenHealth(double secondShieldGenHealth) {
+		this.secondShieldGenHealth = secondShieldGenHealth;
+	}
+
+	public double getComputerHealth() {
+		return computerHealth;
+	}
+
+	public void setComputerHealth(double computerHealth) {
+		this.computerHealth = computerHealth;
+	}
+
+	public double getPhaserHealth() {
+		return phaserHealth;
+	}
+
+	public void setPhaserHealth(double phaserHealth) {
+		this.phaserHealth = phaserHealth;
+	}
+
+	public double getPhotonHealth() {
+		return photonHealth;
+	}
+
+	public void setPhotonHealth(double photonHealth) {
+		this.photonHealth = photonHealth;
+	}
+
+	public double getHullIntegrity() {
+		return hullIntegrity;
+	}
+
+	public void setHullIntegrity(double hullIntegrity) {
+		this.hullIntegrity = hullIntegrity;
+	}
+
+	public boolean isCrewAlive() {
+		return crewAlive;
+	}
+
+	public void setCrewAlive(boolean crewAlive) {
+		this.crewAlive = crewAlive;
+	}
+
+	public boolean isCaptainAlive() {
+		return captainAlive;
+	}
+
+	public void setCaptainAlive(boolean captainAlive) {
+		this.captainAlive = captainAlive;
+	}
+
+	public double getShieldIntegrity() {
+		return shieldIntegrity;
+	}
+
+	public void setShieldIntegrity(double shieldIntegrity) {
+		this.shieldIntegrity = shieldIntegrity;
+	}
+
+	public boolean isShieldsUp() {
+		return shieldsUp;
+	}
+
+	public void setShieldsUp(boolean shieldsUp) {
+		this.shieldsUp = shieldsUp;
+	}
+	
 }

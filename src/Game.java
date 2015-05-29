@@ -18,6 +18,17 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
+	public static final long start = System.currentTimeMillis();
+	public static long end;
+	
+	public static String getSecondsElapsed(){
+		long now = System.currentTimeMillis();
+        return String.format("%.1f", ((now - start) / 1000.0));
+	}
+	
+	public void stopTimer(){
+		end = System.currentTimeMillis();
+	}
 	
 	public static void main(String [] args) throws InterruptedException{
 		JFrame frame = new JFrame("Vengeance HUD");
@@ -41,12 +52,17 @@ public class Game extends JPanel {
 		frame.setLocationRelativeTo(null); //make it open in the center, like everything ought to
 		
 		
-		Thread console = new Thread(new Input());
+		
+		USSVengeance vengeanceObject = new USSVengeance();
+		PlayerShip enterprise = new PlayerShip(vengeanceObject);
+		
+		Thread console = new Thread(new Input(vengeanceObject, enterprise));
 		console.start();
 		
 		while(true){
-			//This is for graphics			
-			Thread.sleep(20);
+			//This is for graphics
+			frame.repaint();
+			Thread.sleep(100);
 		}
 	}
 	
@@ -65,6 +81,8 @@ public class Game extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		gd.setColor(Color.black);
+		gd.drawString(getSecondsElapsed(), 300, 300);
 	
 	}
 	
