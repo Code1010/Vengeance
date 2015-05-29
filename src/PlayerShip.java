@@ -27,10 +27,10 @@ public class PlayerShip extends Ship {
 	private boolean shieldsUp;
 	private double shieldIntegrity;
 	private USSVengeance vengeanceObject;
-	private double foreShields = 0.0;
-	private double aftShields = 0.0;
-	private double leftShields = 0.0;
-	private double rightShields = 0.0;
+	private double foreShields;
+	private double aftShields;
+	private double leftShields;
+	private double rightShields;
 
 	public PlayerShip(boolean sections, boolean impulseEngines,
 			boolean warpDrive, double maxWarp, int impulseThrusters,
@@ -52,7 +52,11 @@ public class PlayerShip extends Ship {
 				photonReload, autoTarget, autoTargetLevel, smartRepair, backup,
 				hackingStation, hackerQuality, hullMaterial, hullStrength,
 				hullWeight, hullColor, name, captainName, federationID, maxPL);
-
+		
+		foreShields = 0.0;
+		aftShields = 0.0;
+		leftShields = 0.0;
+		rightShields = 0.0;
 		impulseHealth = 59.0;
 		warpHealth = 0;
 		sensorHealth = 100.0;

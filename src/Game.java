@@ -40,8 +40,12 @@ public class Game extends JPanel {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null); //make it open in the center, like everything ought to
 		
+		
+		Thread console = new Thread(new Input());
+		console.start();
+		
 		while(true){
-			//game loop here
+			//This is for graphics			
 			Thread.sleep(20);
 		}
 	}
@@ -61,42 +65,7 @@ public class Game extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		try {
-			BufferedImage img;
-			img = ImageIO.read(new File("src/topShieldOn.png"));
-			gd.drawImage(img, 60, 1, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			BufferedImage img;
-			img = ImageIO.read(new File("src/bottomShieldOn.png"));
-			gd.drawImage(img, 60, 300, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			BufferedImage img;
-			img = ImageIO.read(new File("src/aftShieldOn.png"));
-			gd.drawImage(img, 15, 50, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			BufferedImage img;
-			img = ImageIO.read(new File("src/foreShieldOn.png"));
-			gd.drawImage(img, 620, 50, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}
 	
 }
