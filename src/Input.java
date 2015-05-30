@@ -34,6 +34,7 @@ public class Input implements Runnable{
 	}
 	
 	public void interpret(String command){
+		
 		command = command.toLowerCase();
 		if(command.contains("eat")){
 			System.out.println("Captain, I reccommend fending off hunger for now, it is a bad time to eat!");
@@ -50,6 +51,7 @@ public class Input implements Runnable{
 			System.out.println("I don't reccommend killing, unless it's the Vengeance!");
 		} else if(command.contains("surrender")){
 			System.out.println("You surrender to the USS Vengeance. You fought nobly."); //add seconds later
+			System.exit(5);
 		} else if(command.contains("maroon")) {
 			System.out.println("I don't reccommend marooning the crew.");
 		} else if(command.contains("ram")){
@@ -83,7 +85,7 @@ public class Input implements Runnable{
 			
 			//do something to fix the broken thing
 			
-		} else if(command.contains("relocate") && command.contains("personnel")){
+		} else if(command.contains("relocate") && command.contains("personnel")){ //relocate 8 bridge personnel to warp engines
 			
 			//move the people around in the ship
 			
@@ -91,12 +93,45 @@ public class Input implements Runnable{
 			
 			//print out a damage report
 			
+		} else if(command.contains("phaser") && command.contains("fire")){
+			
+			if(command.contains(" at ")){ //fire phasers at the hull power 157
+				
+				command = command.replaceAll(" the ", "");
+				int powerIndex = command.indexOf("power") + 6;
+				int systemIndex = command.indexOf("at") + 3;
+				
+				String p = command.substring(powerIndex);
+				String s = command.substring(systemIndex, (command.indexOf("power")));
+				System.out.println(enterprise.firePhasers(Integer.valueOf(p), s));
+				
+			} else { //fire phasers power 157
+				String p = command.substring(command.indexOf("power") + 6);
+				System.out.println(enterprise.firePhasers(Integer.valueOf(p)));
+			}
+			
+		} else if(command.contains("photon") && command.contains("fire")){
+			
+			//fire the photons
+			
+		} else if(command.contains("seal")){
+			
+			//find which sections to seal
+			
 		} else if(command.contains("warp")){
-			System.out.println("");
+			if(enterprise.getWarpHealth() >= 0){
+				System.out.println("Going to warp, Captain.");
+				System.out.println("Captain, the vengeance has once again crippled the warp drives!");
+			} else {
+				System.out.println("Captain, the Warp Drives are not functional!");
+			}
 		} else if(command.contains("mantis shrimp") && command.contains("fire")){
 			System.out.println("Send'em back to where they came from!");
 			System.out.println("The mantis shrimps fired successfully, but the cold vacuum of space killed all of them instantly. Good job, you singlehandedly extincted a whole species.");
+		} else if(command.contains("viewscreen")){
+			System.out.println("Aye, Captain"); //change the viewscreen mode to show the vengeance
 		}
+		
 	}
 	
 	

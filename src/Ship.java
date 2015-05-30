@@ -161,6 +161,10 @@ public class Ship {
 		maxPhaserLevel = 1000;
 	}
 
+	public void rechargePhasers(){ //iteratively called
+		
+	}
+	
 	public boolean isSections() {
 		return sections;
 	}

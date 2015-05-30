@@ -5,13 +5,13 @@ public class PlayerShip extends Ship {
 	
 	boolean[] sectionsSealed = {false, false, false, false, false, false, false};
 	
-	ArrayList<Crewmember> nearBridge = new ArrayList<Crewmember>(); // 0 0
-	ArrayList<Crewmember> nearWarpDrive = new ArrayList<Crewmember>(); // 0 1
-	ArrayList<Crewmember> nearImpulseEngines = new ArrayList<Crewmember>(); // 0 2
-	ArrayList<Crewmember> nearSensors = new ArrayList<Crewmember>(); // 1 0
-	ArrayList<Crewmember> nearPhasers = new ArrayList<Crewmember>(); // 1 1
-	ArrayList<Crewmember> nearPhotons = new ArrayList<Crewmember>(); // 1 2
-	ArrayList<Crewmember> nearShieldGen = new ArrayList<Crewmember>(); // 2 0
+	ArrayList<Crewmember> nearBridge = new ArrayList<Crewmember>(); 
+	ArrayList<Crewmember> nearWarpDrive = new ArrayList<Crewmember>(); 
+	ArrayList<Crewmember> nearImpulseEngines = new ArrayList<Crewmember>();
+	ArrayList<Crewmember> nearSensors = new ArrayList<Crewmember>(); 
+	ArrayList<Crewmember> nearPhasers = new ArrayList<Crewmember>(); 
+	ArrayList<Crewmember> nearPhotons = new ArrayList<Crewmember>(); 
+	ArrayList<Crewmember> nearShieldGen = new ArrayList<Crewmember>(); 
 	
 	private double impulseHealth;
 	private double warpHealth;
@@ -28,6 +28,8 @@ public class PlayerShip extends Ship {
 	private double shieldIntegrity;
 	private USSVengeance vengeanceObject;
 	private double foreShields;
+	
+
 	private double aftShields;
 	private double leftShields;
 	private double rightShields;
@@ -103,6 +105,75 @@ public class PlayerShip extends Ship {
 		vengeanceObject = u;
 	}
 	
+	public String damage(String system, double intensity){
+		system = system.toLowerCase();
+		String ret = "";
+		int dif = 0;
+		if(shieldsUp){
+			shieldIntegrity -= intensity;
+			ret = system + "...shields are holding";
+			if(shieldIntegrity < 0){
+				dif = (int) (shieldIntegrity * -1);
+				shieldIntegrity = 0;
+				ret = system + "...shields penetrated!";
+			}
+			
+			damageSystem(system, dif);
+			
+		} else {
+			system = damageSystem(system, intensity);
+			ret = system + "...shields penetrated!";
+		}
+		
+		return ret;
+	}
+	
+	public String damageSystem(String system, double intensity){
+		String ret = "hull";
+		
+		if(system.contains("impulse")){
+			impulseHealth -= intensity;
+			ret = "impulse engines";
+		} else if(system.contains("warp")){
+			warpHealth -= intensity;
+			ret = "warp engines";
+		} else if(system.contains("sensor")){
+			sensorHealth -= intensity;
+			ret = "sensor array";
+		} else if(system.contains("shield")){
+			if(shieldGenHealth > 0){
+				shieldGenHealth -= intensity;
+				ret = "main shield generator";
+			}
+			
+			if(shieldGenHealth < 0){
+				secondShieldGenHealth -= (shieldGenHealth * -1);
+				shieldGenHealth = 0;
+				ret = "secondary shield generator";
+			}
+			
+			if((shieldGenHealth <= 0) && (secondShieldGenHealth <= 0)){
+				shieldsUp = false;
+			}
+			
+		} else if(system.contains("computer")){
+			computerHealth -= intensity;
+			ret = "computer systems";
+		} else if(system.contains("phaser")){
+			phaserHealth -= intensity;
+			ret = "phaser banks";
+		} else if(system.contains("photon")){
+			photonHealth -= intensity;
+			ret = "photon torpedoes";
+		} else {
+			hullIntegrity -= intensity;
+			ret = "the hull";
+		}
+		
+		return system;
+	}
+
+	
 	private String targetRandomSystem(double p) {
 		String[] enemySystems = { "impulse", "warp", "sensor", "shieldGen",
 				"2ndShieldGen", "computer", "phaser banks", "photons", "hull" };
@@ -119,7 +190,7 @@ public class PlayerShip extends Ship {
 
 				if (hasAutoTarget()) {
 					double rand = 100 * Math.random();
-					if (getAutoTargetLevel() <= rand) {
+					if (getAutoTargetLevel() >= rand) {
 						setPhaserLevel(getPhaserLevel() - power);
 						return "<<Phasers fired successfully and hit the "
 								+ vengeanceObject.damageVengeance(power, system) + ">>";
@@ -153,7 +224,7 @@ public class PlayerShip extends Ship {
 
 				if (hasAutoTarget()) {
 					double rand = 100 * Math.random();
-					if (getAutoTargetLevel() <= rand) {
+					if (getAutoTargetLevel() >= rand) {
 						setPhaserLevel(getPhaserLevel() - power);
 						return "<<Phasers fired successfully and hit the "
 								+ targetRandomSystem((double) power) + ">>";
@@ -233,6 +304,214 @@ public class PlayerShip extends Ship {
 		} else {
 			return "<<Photon torpedo bays nonfunctional or toepedoes unavailable>>";
 		}
+	}
+	
+	public boolean[] getSectionsSealed() {
+		return sectionsSealed;
+	}
+
+	public void setSectionsSealed(boolean[] sectionsSealed) {
+		this.sectionsSealed = sectionsSealed;
+	}
+
+	public ArrayList<Crewmember> getNearBridge() {
+		return nearBridge;
+	}
+
+	public void setNearBridge(ArrayList<Crewmember> nearBridge) {
+		this.nearBridge = nearBridge;
+	}
+
+	public ArrayList<Crewmember> getNearWarpDrive() {
+		return nearWarpDrive;
+	}
+
+	public void setNearWarpDrive(ArrayList<Crewmember> nearWarpDrive) {
+		this.nearWarpDrive = nearWarpDrive;
+	}
+
+	public ArrayList<Crewmember> getNearImpulseEngines() {
+		return nearImpulseEngines;
+	}
+
+	public void setNearImpulseEngines(ArrayList<Crewmember> nearImpulseEngines) {
+		this.nearImpulseEngines = nearImpulseEngines;
+	}
+
+	public ArrayList<Crewmember> getNearSensors() {
+		return nearSensors;
+	}
+
+	public void setNearSensors(ArrayList<Crewmember> nearSensors) {
+		this.nearSensors = nearSensors;
+	}
+
+	public ArrayList<Crewmember> getNearPhasers() {
+		return nearPhasers;
+	}
+
+	public void setNearPhasers(ArrayList<Crewmember> nearPhasers) {
+		this.nearPhasers = nearPhasers;
+	}
+
+	public ArrayList<Crewmember> getNearPhotons() {
+		return nearPhotons;
+	}
+
+	public void setNearPhotons(ArrayList<Crewmember> nearPhotons) {
+		this.nearPhotons = nearPhotons;
+	}
+
+	public ArrayList<Crewmember> getNearShieldGen() {
+		return nearShieldGen;
+	}
+
+	public void setNearShieldGen(ArrayList<Crewmember> nearShieldGen) {
+		this.nearShieldGen = nearShieldGen;
+	}
+
+	public double getImpulseHealth() {
+		return impulseHealth;
+	}
+
+	public void setImpulseHealth(double impulseHealth) {
+		this.impulseHealth = impulseHealth;
+	}
+
+	public double getWarpHealth() {
+		return warpHealth;
+	}
+
+	public void setWarpHealth(double warpHealth) {
+		this.warpHealth = warpHealth;
+	}
+
+	public double getSensorHealth() {
+		return sensorHealth;
+	}
+
+	public void setSensorHealth(double sensorHealth) {
+		this.sensorHealth = sensorHealth;
+	}
+
+	public double getShieldGenHealth() {
+		return shieldGenHealth;
+	}
+
+	public void setShieldGenHealth(double shieldGenHealth) {
+		this.shieldGenHealth = shieldGenHealth;
+	}
+
+	public double getSecondShieldGenHealth() {
+		return secondShieldGenHealth;
+	}
+
+	public void setSecondShieldGenHealth(double secondShieldGenHealth) {
+		this.secondShieldGenHealth = secondShieldGenHealth;
+	}
+
+	public double getComputerHealth() {
+		return computerHealth;
+	}
+
+	public void setComputerHealth(double computerHealth) {
+		this.computerHealth = computerHealth;
+	}
+
+	public double getPhaserHealth() {
+		return phaserHealth;
+	}
+
+	public void setPhaserHealth(double phaserHealth) {
+		this.phaserHealth = phaserHealth;
+	}
+
+	public double getPhotonHealth() {
+		return photonHealth;
+	}
+
+	public void setPhotonHealth(double photonHealth) {
+		this.photonHealth = photonHealth;
+	}
+
+	public double getHullIntegrity() {
+		return hullIntegrity;
+	}
+
+	public void setHullIntegrity(double hullIntegrity) {
+		this.hullIntegrity = hullIntegrity;
+	}
+
+	public boolean isCrewAlive() {
+		return crewAlive;
+	}
+
+	public void setCrewAlive(boolean crewAlive) {
+		this.crewAlive = crewAlive;
+	}
+
+	public boolean isCaptainAlive() {
+		return captainAlive;
+	}
+
+	public void setCaptainAlive(boolean captainAlive) {
+		this.captainAlive = captainAlive;
+	}
+
+	public boolean isShieldsUp() {
+		return shieldsUp;
+	}
+
+	public void setShieldsUp(boolean shieldsUp) {
+		this.shieldsUp = shieldsUp;
+	}
+
+	public double getShieldIntegrity() {
+		return shieldIntegrity;
+	}
+
+	public void setShieldIntegrity(double shieldIntegrity) {
+		this.shieldIntegrity = shieldIntegrity;
+	}
+
+	public USSVengeance getVengeanceObject() {
+		return vengeanceObject;
+	}
+
+	public void setVengeanceObject(USSVengeance vengeanceObject) {
+		this.vengeanceObject = vengeanceObject;
+	}
+
+	public double getForeShields() {
+		return foreShields;
+	}
+
+	public void setForeShields(double foreShields) {
+		this.foreShields = foreShields;
+	}
+
+	public double getAftShields() {
+		return aftShields;
+	}
+
+	public void setAftShields(double aftShields) {
+		this.aftShields = aftShields;
+	}
+
+	public double getLeftShields() {
+		return leftShields;
+	}
+
+	public void setLeftShields(double leftShields) {
+		this.leftShields = leftShields;
+	}
+
+	public double getRightShields() {
+		return rightShields;
+	}
+
+	public void setRightShields(double rightShields) {
+		this.rightShields = rightShields;
 	}
 	
 }

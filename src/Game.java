@@ -34,6 +34,7 @@ public class Game extends JPanel {
 		JFrame frame = new JFrame("Vengeance HUD");
 		Game window = new Game();
 		frame.add(window);
+		frame.setAlwaysOnTop(true);
 		
 		//set the window icon
 		BufferedImage icon;
@@ -73,6 +74,7 @@ public class Game extends JPanel {
 		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		gd.setColor(Color.WHITE);
 		gd.fillRect(0, 0, 700, 600);
+		
 		try {
 			BufferedImage img;
 			img = ImageIO.read(new File("src/finishedBG.png"));
@@ -81,8 +83,10 @@ public class Game extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		gd.setFont(new Font("Arial", Font.ITALIC, 26));
 		gd.setColor(Color.black);
-		gd.drawString(getSecondsElapsed(), 300, 300);
+		gd.drawString(getSecondsElapsed(), 0, 26);
 	
 	}
 	
