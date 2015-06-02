@@ -13,13 +13,7 @@ public class Input implements Runnable{
 		enterprise = new PlayerShip(veng);
 	}
 	
-	public USSVengeance getVengeance(){
-		return veng;
-	}
 	
-	public PlayerShip getEnterprise(){
-		return enterprise;
-	}
 	
 	@Override
 	public void run() {
@@ -44,9 +38,9 @@ public class Input implements Runnable{
 	public void interpret(String command){
 		
 		command = command.toLowerCase();
-		if(command.contains("eat")){
+		if(command.contains("eat ")){
 			System.out.println("Captain, I reccommend fending off hunger for now, it is a bad time to eat!");
-		} else if(command.contains("drink")){
+		} else if(command.contains("drink ")){
 			System.out.println("Ahhhhh. That was refreshing.");
 		} else if(command.contains("joke")){
 			System.out.println("Haha!");
@@ -96,7 +90,16 @@ public class Input implements Runnable{
 		} else if(command.contains("relocate") && command.contains("personnel")){ //relocate 8 bridge personnel to warp engines
 			//must be in this format:
 			//RELOCATE [num] [location] PERSONNEL TO [destination]
+			System.out.println(enterprise.printIt());
+			command = command.replaceAll(" the ", "");
 			int numLoc = command.indexOf("relocate ") + 9;
+			String temp = command.substring(numLoc);
+			int endNum = command.indexOf(" ", numLoc);
+			int num = Integer.valueOf(command.substring(numLoc, endNum).trim());
+			String loc = command.substring(endNum, command.indexOf(" personnel")).trim();
+			String dest = command.substring(command.indexOf("to ") + 3).trim();
+			enterprise.movePerson(loc, dest);
+			System.out.println(enterprise.printIt());
 			
 			
 		} else if(command.contains("damage") && command.contains("report")){
@@ -142,6 +145,30 @@ public class Input implements Runnable{
 			System.out.println("Aye, Captain"); //change the viewscreen mode to show the vengeance
 		}
 		
+	}
+	
+	public String getNearBridge(){
+		return String.valueOf(enterprise.printIt());
+	}
+	
+	public String getNearSensors(){
+		return String.valueOf(enterprise.nearSensors.size());
+	}
+	
+	public String getNearPhasers(){
+		return String.valueOf(enterprise.nearPhasers.size());
+	}
+	
+	public String getNearPhotons(){
+		return String.valueOf(enterprise.nearPhotons.size());
+	}
+	
+	public String getNearShields(){
+		return String.valueOf(enterprise.nearShieldGen.size());
+	}
+	
+	public String getNearWarpDrive(){
+		return String.valueOf(enterprise.nearWarpDrive.size());
 	}
 	
 	

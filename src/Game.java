@@ -58,6 +58,8 @@ public class Game extends JPanel {
 		Thread console = new Thread(new Input());
 		console.start();
 		
+		
+		
 		while(true){
 			//This is for graphics
 			frame.repaint();
@@ -84,14 +86,16 @@ public class Game extends JPanel {
 		
 		gd.setFont(new Font("Arial", Font.ITALIC, 26));
 		gd.setColor(Color.black);
+		gd.drawString(i.getNearWarpDrive(), 195, 124);
+		gd.drawString(i.getNearShields(), 276, 181);
+		gd.drawString(i.getNearPhotons(), 438, 94);
+		gd.drawString(i.getNearPhasers(), 438, 271);
+		gd.drawString(i.getNearBridge(), 438, 174);
+		gd.drawString(i.getNearSensors(), 558, 179);
+		
 		gd.drawString(getSecondsElapsed(), 0, 26);
 	
-		gd.drawString(String.valueOf(i.getEnterprise().nearWarpDrive.size()), 195, 124);
-		gd.drawString(String.valueOf(i.getEnterprise().nearShieldGen.size()), 276, 181);
-		gd.drawString(String.valueOf(i.getEnterprise().nearPhotons.size()), 438, 94);
-		gd.drawString(String.valueOf(i.getEnterprise().nearPhasers.size()), 438, 271);
-		gd.drawString(String.valueOf(i.getEnterprise().nearBridge.size()), 438, 174);
-		gd.drawString(String.valueOf(i.getEnterprise().nearSensors.size()), 558, 179);
+		
 		
 	}
 	

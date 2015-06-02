@@ -27,7 +27,6 @@ public class PlayerShip extends Ship {
 	private double shieldIntegrity;
 	private USSVengeance vengeanceObject;
 	private double foreShields;
-	
 
 	private double aftShields;
 	private double leftShields;
@@ -62,13 +61,13 @@ public class PlayerShip extends Ship {
 		shieldsUp = true;
 		shieldIntegrity = 100.0;
 		
-		for(int i = 1; i <= 10; i++){
+		for(int i = 1; i <= 3; i++){
 			nearBridge.add(new Crewmember());
 		}
 		for(int i = 1; i <= 10; i++){
 			nearPhasers.add(new Crewmember());
 		}
-		for(int i = 1; i <= 10; i++){
+		for(int i = 1; i <= 15; i++){
 			nearPhotons.add(new Crewmember());
 		}
 		for(int i = 1; i <= 10; i++){
@@ -123,8 +122,14 @@ public class PlayerShip extends Ship {
 		vengeanceObject = u;
 	}
 	
+	public int printIt(){
+		return nearBridge.size();
+	}
+	
 	public void movePerson(String loc, String dest){
-			if(loc.equals("bridge")){
+		loc = loc.trim();
+		dest = dest.trim();
+			if(loc.contains("bridge")){
 				
 				if(dest.equals("bridge")){
 					System.out.println("Already there, captain");
