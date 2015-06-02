@@ -22,6 +22,7 @@ public class Game extends JPanel {
 	public static long end;
 	
 	Input i = new Input();
+	String prints = "1000";
 	
 	public static String getSecondsElapsed(){
 		long now = System.currentTimeMillis();
@@ -70,6 +71,7 @@ public class Game extends JPanel {
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
+		prints = i.getNearBridge();
 		Graphics2D gd = (Graphics2D) g;
 		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		gd.setColor(Color.WHITE);
@@ -90,7 +92,7 @@ public class Game extends JPanel {
 		gd.drawString(i.getNearShields(), 276, 181);
 		gd.drawString(i.getNearPhotons(), 438, 94);
 		gd.drawString(i.getNearPhasers(), 438, 271);
-		gd.drawString(i.getNearBridge(), 438, 174);
+		gd.drawString(prints, 438, 174);
 		gd.drawString(i.getNearSensors(), 558, 179);
 		
 		gd.drawString(getSecondsElapsed(), 0, 26);
