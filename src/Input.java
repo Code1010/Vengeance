@@ -8,9 +8,17 @@ public class Input implements Runnable{
 	private int loops;
 	private boolean asked = false;
 	
-	public Input(USSVengeance vo, PlayerShip enterprise){
-		veng = vo;
-		this.enterprise = enterprise;
+	public Input(){
+		veng = new USSVengeance();
+		enterprise = new PlayerShip(veng);
+	}
+	
+	public USSVengeance getVengeance(){
+		return veng;
+	}
+	
+	public PlayerShip getEnterprise(){
+		return enterprise;
 	}
 	
 	@Override
@@ -86,8 +94,10 @@ public class Input implements Runnable{
 			//do something to fix the broken thing
 			
 		} else if(command.contains("relocate") && command.contains("personnel")){ //relocate 8 bridge personnel to warp engines
+			//must be in this format:
+			//RELOCATE [num] [location] PERSONNEL TO [destination]
+			int numLoc = command.indexOf("relocate ") + 9;
 			
-			//move the people around in the ship
 			
 		} else if(command.contains("damage") && command.contains("report")){
 			

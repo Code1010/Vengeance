@@ -21,6 +21,8 @@ public class Game extends JPanel {
 	public static final long start = System.currentTimeMillis();
 	public static long end;
 	
+	Input i = new Input();
+	
 	public static String getSecondsElapsed(){
 		long now = System.currentTimeMillis();
         return String.format("%.1f", ((now - start) / 1000.0));
@@ -53,11 +55,7 @@ public class Game extends JPanel {
 		frame.setLocationRelativeTo(null); //make it open in the center, like everything ought to
 		
 		
-		
-		USSVengeance vengeanceObject = new USSVengeance();
-		PlayerShip enterprise = new PlayerShip(vengeanceObject);
-		
-		Thread console = new Thread(new Input(vengeanceObject, enterprise));
+		Thread console = new Thread(new Input());
 		console.start();
 		
 		while(true){
@@ -88,6 +86,13 @@ public class Game extends JPanel {
 		gd.setColor(Color.black);
 		gd.drawString(getSecondsElapsed(), 0, 26);
 	
+		gd.drawString(String.valueOf(i.getEnterprise().nearWarpDrive.size()), 195, 124);
+		gd.drawString(String.valueOf(i.getEnterprise().nearShieldGen.size()), 276, 181);
+		gd.drawString(String.valueOf(i.getEnterprise().nearPhotons.size()), 438, 94);
+		gd.drawString(String.valueOf(i.getEnterprise().nearPhasers.size()), 438, 271);
+		gd.drawString(String.valueOf(i.getEnterprise().nearBridge.size()), 438, 174);
+		gd.drawString(String.valueOf(i.getEnterprise().nearSensors.size()), 558, 179);
+		
 	}
 	
 }

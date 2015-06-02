@@ -7,7 +7,6 @@ public class PlayerShip extends Ship {
 	
 	ArrayList<Crewmember> nearBridge = new ArrayList<Crewmember>(); 
 	ArrayList<Crewmember> nearWarpDrive = new ArrayList<Crewmember>(); 
-	ArrayList<Crewmember> nearImpulseEngines = new ArrayList<Crewmember>();
 	ArrayList<Crewmember> nearSensors = new ArrayList<Crewmember>(); 
 	ArrayList<Crewmember> nearPhasers = new ArrayList<Crewmember>(); 
 	ArrayList<Crewmember> nearPhotons = new ArrayList<Crewmember>(); 
@@ -62,6 +61,25 @@ public class PlayerShip extends Ship {
 		captainAlive = true;
 		shieldsUp = true;
 		shieldIntegrity = 100.0;
+		
+		for(int i = 1; i <= 10; i++){
+			nearBridge.add(new Crewmember());
+		}
+		for(int i = 1; i <= 10; i++){
+			nearPhasers.add(new Crewmember());
+		}
+		for(int i = 1; i <= 10; i++){
+			nearPhotons.add(new Crewmember());
+		}
+		for(int i = 1; i <= 10; i++){
+			nearSensors.add(new Crewmember());
+		}
+		for(int i = 1; i <= 10; i++){
+			nearShieldGen.add(new Crewmember());
+		}
+		for(int i = 1; i <= 10; i++){
+			nearWarpDrive.add(new Crewmember());
+		}
 	}
 	
 	public PlayerShip(boolean sections, boolean impulseEngines,
@@ -103,6 +121,106 @@ public class PlayerShip extends Ship {
 		shieldsUp = true;
 		shieldIntegrity = 100.0;
 		vengeanceObject = u;
+	}
+	
+	public void movePerson(String loc, String dest){
+			if(loc.equals("bridge")){
+				
+				if(dest.equals("bridge")){
+					System.out.println("Already there, captain");
+				} else if(dest.contains("shield")){
+					nearShieldGen.add(nearBridge.remove(0));
+				} else if(dest.contains("photon")){
+					nearPhotons.add(nearBridge.remove(0));
+				} else if(dest.contains("phaser")){
+					nearPhasers.add(nearBridge.remove(0));
+				} else if(dest.contains("sensor")){
+					nearSensors.add(nearBridge.remove(0));
+				} else if(dest.contains("warp") || loc.contains("drive")){
+					nearWarpDrive.add(nearBridge.remove(0));
+				}
+				
+			} else if(loc.contains("shield")){
+				
+				if(dest.equals("bridge")){
+					nearBridge.add(nearShieldGen.remove(0));
+				} else if(dest.contains("shield")){
+					System.out.println("Already there, captain");
+				} else if(dest.contains("photon")){
+					nearPhotons.add(nearShieldGen.remove(0));
+				} else if(dest.contains("phaser")){
+					nearPhasers.add(nearShieldGen.remove(0));
+				} else if(dest.contains("sensor")){
+					nearSensors.add(nearShieldGen.remove(0));
+				} else if(dest.contains("warp") || loc.contains("drive")){
+					nearWarpDrive.add(nearShieldGen.remove(0));
+				}
+				
+			} else if(loc.contains("photon")){
+				
+				if(dest.equals("bridge")){
+					nearBridge.add(nearPhotons.remove(0));
+				} else if(dest.contains("shield")){
+					nearShieldGen.add(nearPhotons.remove(0));
+				} else if(dest.contains("photon")){
+					System.out.println("Already there, captain");
+				} else if(dest.contains("phaser")){
+					nearPhasers.add(nearPhotons.remove(0));
+				} else if(dest.contains("sensor")){
+					nearSensors.add(nearPhotons.remove(0));
+				} else if(dest.contains("warp") || loc.contains("drive")){
+					nearWarpDrive.add(nearPhotons.remove(0));
+				}
+				
+			} else if(loc.contains("phaser")){
+				
+				if(dest.equals("bridge")){
+					nearBridge.add(nearPhasers.remove(0));
+				} else if(dest.contains("shield")){
+					nearShieldGen.add(nearPhasers.remove(0));
+				} else if(dest.contains("photon")){
+					nearPhotons.add(nearPhasers.remove(0));
+				} else if(dest.contains("phaser")){
+					System.out.println("Already there, captain");
+				} else if(dest.contains("sensor")){
+					nearSensors.add(nearPhasers.remove(0));
+				} else if(dest.contains("warp") || loc.contains("drive")){
+					nearWarpDrive.add(nearPhasers.remove(0));
+				}
+				
+			} else if(loc.contains("sensor")){
+				
+				if(dest.equals("bridge")){
+					nearBridge.add(nearSensors.remove(0));
+				} else if(dest.contains("shield")){
+					nearShieldGen.add(nearSensors.remove(0));
+				} else if(dest.contains("photon")){
+					nearPhotons.add(nearSensors.remove(0));
+				} else if(dest.contains("phaser")){
+					nearPhasers.add(nearSensors.remove(0));
+				} else if(dest.contains("sensor")){
+					System.out.println("Already there, captain");
+				} else if(dest.contains("warp") || loc.contains("drive")){
+					nearWarpDrive.add(nearSensors.remove(0));
+				}
+				
+			} else if(loc.contains("warp") || loc.contains("drive")){
+				
+				if(dest.equals("bridge")){
+					nearBridge.add(nearWarpDrive.remove(0));
+				} else if(dest.contains("shield")){
+					nearShieldGen.add(nearWarpDrive.remove(0));
+				} else if(dest.contains("photon")){
+					nearPhotons.add(nearWarpDrive.remove(0));
+				} else if(dest.contains("phaser")){
+					nearPhasers.add(nearWarpDrive.remove(0));
+				} else if(dest.contains("sensor")){
+					nearSensors.add(nearWarpDrive.remove(0));
+				} else if(dest.contains("warp") || loc.contains("drive")){
+					System.out.println("Already there, captain");
+				}
+				
+			}
 	}
 	
 	public String damage(String system, double intensity){
@@ -328,14 +446,6 @@ public class PlayerShip extends Ship {
 
 	public void setNearWarpDrive(ArrayList<Crewmember> nearWarpDrive) {
 		this.nearWarpDrive = nearWarpDrive;
-	}
-
-	public ArrayList<Crewmember> getNearImpulseEngines() {
-		return nearImpulseEngines;
-	}
-
-	public void setNearImpulseEngines(ArrayList<Crewmember> nearImpulseEngines) {
-		this.nearImpulseEngines = nearImpulseEngines;
 	}
 
 	public ArrayList<Crewmember> getNearSensors() {
