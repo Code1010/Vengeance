@@ -7,6 +7,7 @@ public class Input implements Runnable{
 	private PlayerShip enterprise = new PlayerShip(veng);
 	private int loops;
 	private boolean asked = false;
+	static int inputs = 0;
 	
 	@Override
 	public void run() {
@@ -26,6 +27,10 @@ public class Input implements Runnable{
 			
 		}
 		
+	}
+	
+	public static void incr(){
+		inputs++;
 	}
 	
 	public void interpret(String command){
@@ -91,7 +96,9 @@ public class Input implements Runnable{
 			int num = Integer.valueOf(command.substring(numLoc, endNum).trim());
 			String loc = command.substring(endNum, command.indexOf(" personnel")).trim();
 			String dest = command.substring(command.indexOf("to ") + 3).trim();
-			enterprise.movePerson(loc, dest);
+			for(int i = 1; i <= num; i++){
+				enterprise.movePerson(loc, dest);
+			}			
 			System.out.println(getNearBridge());
 			
 			
@@ -138,6 +145,10 @@ public class Input implements Runnable{
 			System.out.println("Aye, Captain"); //change the viewscreen mode to show the vengeance
 		}
 		
+	}
+	
+	public int getNumNearBridge(){
+		return enterprise.nearBridge.size();
 	}
 	
 	public String getNearBridge(){
