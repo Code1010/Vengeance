@@ -21,7 +21,7 @@ public class Game extends JPanel {
 	public static final long start = System.currentTimeMillis();
 	public static long end;
 	
-	Input i = new Input();
+	static Input i = new Input();
 	
 	public static String getSecondsElapsed(){
 		long now = System.currentTimeMillis();
@@ -37,6 +37,7 @@ public class Game extends JPanel {
 		Game window = new Game();
 		frame.add(window);
 		frame.setAlwaysOnTop(true);
+		
 		//set the window icon
 		BufferedImage icon;
 		try {
@@ -54,7 +55,7 @@ public class Game extends JPanel {
 		frame.setLocationRelativeTo(null); //make it open in the center, like everything ought to
 		
 		
-		Thread console = new Thread(new Input());
+		Thread console = new Thread(i);
 		console.start();		
 		
 		while(true){
@@ -89,15 +90,18 @@ public class Game extends JPanel {
 		gd.drawString(i.getNearPhasers(), 438, 271);
 		gd.drawString(i.getNearBridge(), 438, 174);
 		gd.drawString(i.getNearSensors(), 558, 179);
-		
 		gd.drawString(getSecondsElapsed(), 0, 26);
 		
 		if(i.foreShieldsOn()){
 			gd.drawArc(530, 20, 100, 300, 270, 180);
 		}
 		
-		if(!i.aftShieldsOn()){
+		if(i.aftShieldsOn()){
 			gd.drawArc(30, 20, 100, 300, 90, 180);
+		}
+		
+		if(!i.rightShieldsOn()){
+//			gd.drawArc(x, y, width, height, startAngle, arcAngle);
 		}
 		
 	}

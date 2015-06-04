@@ -83,7 +83,6 @@ public class Input implements Runnable{
 		} else if(command.contains("relocate") && command.contains("personnel")){ //relocate 8 bridge personnel to warp engines
 			//must be in this format:
 			//RELOCATE [num] [location] PERSONNEL TO [destination]
-			System.out.println(getNearBridge());
 			command = command.replaceAll(" the ", "");
 			int numLoc = command.indexOf("relocate ") + 9;
 			String temp = command.substring(numLoc);
@@ -93,9 +92,7 @@ public class Input implements Runnable{
 			String dest = command.substring(command.indexOf("to ") + 3).trim();
 			for(int i = 1; i <= num; i++){
 				enterprise.movePerson(loc, dest);
-			}			
-			System.out.println(getNearBridge());
-			
+			}						
 			
 		} else if(command.contains("damage") && command.contains("report")){
 			
@@ -122,9 +119,9 @@ public class Input implements Runnable{
 			
 			//fire the photons
 			
-		} else if(command.contains("seal")){
+		} else if(command.contains("raise") && command.contains("shield")){
 			
-			//find which sections to seal
+			//do it!
 			
 		} else if(command.contains("warp")){
 			if(enterprise.getWarpHealth() >= 0){
