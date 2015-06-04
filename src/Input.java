@@ -119,9 +119,19 @@ public class Input implements Runnable{
 			
 			//fire the photons
 			
-		} else if(command.contains("raise") && command.contains("shield")){
+		} else if((command.contains("lower") || command.contains("down ")) && command.contains("shield")){
+
+			enterprise.setAftShields(0);
+			enterprise.setForeShields(0);
+			enterprise.setRightShields(0);
+			enterprise.setLeftShields(0);
 			
-			//do it!
+		} else if((command.contains("raise") || command.contains("up ")) && command.contains("shield")){
+
+			enterprise.setAftShields(25);
+			enterprise.setForeShields(25);
+			enterprise.setRightShields(25);
+			enterprise.setLeftShields(25);
 			
 		} else if(command.contains("warp")){
 			if(enterprise.getWarpHealth() >= 0){

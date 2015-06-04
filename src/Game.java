@@ -82,26 +82,48 @@ public class Game extends JPanel {
 			e.printStackTrace();
 		}
 		
-		gd.setFont(new Font("Arial", Font.ITALIC, 26));
 		gd.setColor(Color.black);
+		gd.setFont(new Font("Arial Narrow", Font.PLAIN, 20));
+		gd.drawString("Score: " + getSecondsElapsed(), 0, 20);
+		gd.setFont(new Font("Arial", Font.ITALIC, 26));
 		gd.drawString(i.getNearWarpDrive(), 195, 124);
 		gd.drawString(i.getNearShields(), 276, 181);
 		gd.drawString(i.getNearPhotons(), 438, 94);
 		gd.drawString(i.getNearPhasers(), 438, 271);
 		gd.drawString(i.getNearBridge(), 438, 174);
 		gd.drawString(i.getNearSensors(), 558, 179);
-		gd.drawString(getSecondsElapsed(), 0, 26);
+		
 		
 		if(i.foreShieldsOn()){
+			gd.setColor(Color.BLUE);
+			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
 			gd.drawArc(530, 20, 100, 300, 270, 180);
+			gd.setColor(new Color(174, 191, 233));
+			gd.drawString(String.format("%.0f%%", i.getForeShields()), 631, 179);
 		}
 		
 		if(i.aftShieldsOn()){
-			gd.drawArc(30, 20, 100, 300, 90, 180);
+			gd.setColor(Color.blue);
+			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
+			gd.drawArc(60, 20, 100, 300, 90, 180);
+			gd.setColor(new Color(174, 191, 233));
+			gd.drawString(String.format("%.0f%%", i.getAftShields()), 65, 179);
 		}
 		
-		if(!i.rightShieldsOn()){
-//			gd.drawArc(x, y, width, height, startAngle, arcAngle);
+		if(i.rightShieldsOn()){
+			gd.setColor(Color.BLUE);
+			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
+			gd.drawArc(105, 308, 482, 20, 180, 180);
+			gd.setColor(new Color(174, 191, 233));
+			gd.drawString(String.format("%.0f%%", i.getRightShields()), 330, 300);
+		}
+		
+		if(i.leftShieldsOn()){
+			gd.setColor(Color.BLUE);
+			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
+			gd.drawArc(105, 12, 482, 20, 0, 180);
+			gd.setColor(new Color(174, 191, 233));
+			gd.drawString(String.format("%.0f%%", i.getLeftShields()), 330, 60);
 		}
 		
 	}
