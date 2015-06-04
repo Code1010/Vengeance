@@ -7,7 +7,6 @@ public class Input implements Runnable{
 	private PlayerShip enterprise = new PlayerShip(veng);
 	private int loops;
 	private boolean asked = false;
-	static int inputs = 0;
 	
 	@Override
 	public void run() {
@@ -27,10 +26,6 @@ public class Input implements Runnable{
 			
 		}
 		
-	}
-	
-	public static void incr(){
-		inputs++;
 	}
 	
 	public void interpret(String command){
@@ -145,6 +140,38 @@ public class Input implements Runnable{
 			System.out.println("Aye, Captain"); //change the viewscreen mode to show the vengeance
 		}
 		
+	}
+	
+	public double getForeShields(){
+		return enterprise.getForeShields();
+	}
+	
+	public double getAftShields(){
+		return enterprise.getAftShields();
+	}
+	
+	public double getLeftShields(){
+		return enterprise.getLeftShields();
+	}
+	
+	public double getRightShields(){
+		return enterprise.getRightShields();
+	}
+	
+	public boolean foreShieldsOn(){
+		return enterprise.getForeShields() > 0.0;
+	}
+	
+	public boolean aftShieldsOn(){
+		return enterprise.getAftShields() > 0.0;
+	}
+	
+	public boolean leftShieldsOn(){
+		return enterprise.getLeftShields() > 0.0;
+	}
+	
+	public boolean rightShieldsOn(){
+		return enterprise.getRightShields() > 0.0;
 	}
 	
 	public int getNumNearBridge(){

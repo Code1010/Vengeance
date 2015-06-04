@@ -61,7 +61,6 @@ public class Game extends JPanel {
 			//This is for graphics
 			frame.repaint();
 			Thread.sleep(100);
-			Input.incr();
 		}
 	}
 	
@@ -92,6 +91,14 @@ public class Game extends JPanel {
 		gd.drawString(i.getNearSensors(), 558, 179);
 		
 		gd.drawString(getSecondsElapsed(), 0, 26);
+		
+		if(i.foreShieldsOn()){
+			gd.drawArc(530, 20, 100, 300, 270, 180);
+		}
+		
+		if(!i.aftShieldsOn()){
+			gd.drawArc(30, 20, 100, 300, 90, 180);
+		}
 		
 	}
 	

@@ -26,8 +26,8 @@ public class PlayerShip extends Ship {
 	private boolean shieldsUp;
 	private double shieldIntegrity;
 	private USSVengeance vengeanceObject;
+	
 	private double foreShields;
-
 	private double aftShields;
 	private double leftShields;
 	private double rightShields;
