@@ -209,6 +209,23 @@ public class Input implements Runnable{
 		return String.valueOf(enterprise.nearWarpDrive.size());
 	}
 	
+	public int getPhaserHealth(){
+		return (int) enterprise.getPhaserHealth();
+	}
 	
+	public int getPhotonHealth(){
+		return (int) enterprise.getPhotonHealth();
+	}
 	
+	public int getShieldGenHealth(){
+		return (int) enterprise.getShieldGenHealth();
+	}
+	
+	public int getSensorHealth(){
+		return (int) enterprise.getSensorHealth();
+	}
+	
+	public int getWarpDriveHealth(){
+		return (int) enterprise.getWarpHealth();
+	}
 }

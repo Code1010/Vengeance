@@ -20,6 +20,9 @@ public class Game extends JPanel {
 
 	public static final long start = System.currentTimeMillis();
 	public static long end;
+	final Font percentage = new Font("Monospaced", Font.PLAIN, 20);
+	final Font score = new Font("Arial Narrow", Font.PLAIN, 20);
+	final Font people = new Font("Arial", Font.ITALIC, 26);
 	
 	static Input i = new Input();
 	
@@ -83,9 +86,9 @@ public class Game extends JPanel {
 		}
 		
 		gd.setColor(Color.black);
-		gd.setFont(new Font("Arial Narrow", Font.PLAIN, 20));
+		gd.setFont(score);
 		gd.drawString("Score: " + getSecondsElapsed(), 0, 20);
-		gd.setFont(new Font("Arial", Font.ITALIC, 26));
+		gd.setFont(people);
 		gd.drawString(i.getNearWarpDrive(), 195, 124);
 		gd.drawString(i.getNearShields(), 276, 181);
 		gd.drawString(i.getNearPhotons(), 438, 94);
@@ -96,7 +99,7 @@ public class Game extends JPanel {
 		
 		if(i.foreShieldsOn()){
 			gd.setColor(Color.BLUE);
-			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
+			gd.setFont(percentage);
 			gd.drawArc(530, 20, 100, 300, 270, 180);
 			gd.setColor(new Color(174, 191, 233));
 			gd.drawString(String.format("%.0f%%", i.getForeShields()), 631, 179);
@@ -104,7 +107,7 @@ public class Game extends JPanel {
 		
 		if(i.aftShieldsOn()){
 			gd.setColor(Color.blue);
-			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
+			gd.setFont(percentage);
 			gd.drawArc(60, 20, 100, 300, 90, 180);
 			gd.setColor(new Color(174, 191, 233));
 			gd.drawString(String.format("%.0f%%", i.getAftShields()), 65, 179);
@@ -112,7 +115,7 @@ public class Game extends JPanel {
 		
 		if(i.rightShieldsOn()){
 			gd.setColor(Color.BLUE);
-			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
+			gd.setFont(percentage);
 			gd.drawArc(105, 308, 482, 20, 180, 180);
 			gd.setColor(new Color(174, 191, 233));
 			gd.drawString(String.format("%.0f%%", i.getRightShields()), 330, 300);
@@ -120,11 +123,50 @@ public class Game extends JPanel {
 		
 		if(i.leftShieldsOn()){
 			gd.setColor(Color.BLUE);
-			gd.setFont(new Font("Monospaced", Font.PLAIN, 20));
+			gd.setFont(percentage);
 			gd.drawArc(105, 12, 482, 20, 0, 180);
 			gd.setColor(new Color(174, 191, 233));
 			gd.drawString(String.format("%.0f%%", i.getLeftShields()), 330, 60);
 		}
+		
+		drawPhaserData(gd, 10, 330, Color.black);
+		
+	}
+	
+	public Color getContrastingColor(Color c){
+		double a = 1 - ( 0.299 * c.getRed() + 0.587 * c.getGreen() + 0.114 * c.getBlue())/255;
+		int d;
+		if(a < .5){
+			d = 0;
+		} else {
+			d = 255;
+		}
+		
+		return new Color(d, d, d);
+	}
+	
+	public void drawPhaserData(Graphics2D gd, int topX, int topY, Color bg){	
+		
+		gd.setColor(bg);
+		gd.fillRect(topX, topY, 180, 200);
+		gd.setColor(getContrastingColor(bg));
+		gd.setFont(score);
+		gd.drawString("Phaser Banks", topX + 10, topY + gd.getFont().getSize());
+		
+		gd.setFont(percentage);
+		gd.drawString(String.format("%d%%", i.getPhaserHealth()), topX + 10, topY + 195);
+		gd.drawString("LVL", topX + 120, topY + 195);
+		
+		if(i.getPhaserHealth() >= 50){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getPhaserHealth() >= 25){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX + 12, topY + 30 - i.getPhaserHealth(), 40, i.getPhaserHealth());
+		
 		
 	}
 	
