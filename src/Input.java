@@ -3,17 +3,10 @@ import java.util.Scanner;
 
 public class Input implements Runnable{
 
-	private USSVengeance veng;
-	private PlayerShip enterprise;
+	private USSVengeance veng = new USSVengeance();
+	private PlayerShip enterprise = new PlayerShip(veng);
 	private int loops;
 	private boolean asked = false;
-	
-	public Input(){
-		veng = new USSVengeance();
-		enterprise = new PlayerShip(veng);
-	}
-	
-	
 	
 	@Override
 	public void run() {
@@ -90,7 +83,7 @@ public class Input implements Runnable{
 		} else if(command.contains("relocate") && command.contains("personnel")){ //relocate 8 bridge personnel to warp engines
 			//must be in this format:
 			//RELOCATE [num] [location] PERSONNEL TO [destination]
-			System.out.println(enterprise.printIt());
+			System.out.println(getNearBridge());
 			command = command.replaceAll(" the ", "");
 			int numLoc = command.indexOf("relocate ") + 9;
 			String temp = command.substring(numLoc);
@@ -99,7 +92,7 @@ public class Input implements Runnable{
 			String loc = command.substring(endNum, command.indexOf(" personnel")).trim();
 			String dest = command.substring(command.indexOf("to ") + 3).trim();
 			enterprise.movePerson(loc, dest);
-			System.out.println(enterprise.printIt());
+			System.out.println(getNearBridge());
 			
 			
 		} else if(command.contains("damage") && command.contains("report")){
@@ -148,7 +141,7 @@ public class Input implements Runnable{
 	}
 	
 	public String getNearBridge(){
-		return String.valueOf(enterprise.printIt());
+		return String.valueOf(enterprise.nearBridge.size());
 	}
 	
 	public String getNearSensors(){

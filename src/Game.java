@@ -38,7 +38,6 @@ public class Game extends JPanel {
 		Game window = new Game();
 		frame.add(window);
 		frame.setAlwaysOnTop(true);
-		
 		//set the window icon
 		BufferedImage icon;
 		try {

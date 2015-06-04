@@ -61,13 +61,13 @@ public class PlayerShip extends Ship {
 		shieldsUp = true;
 		shieldIntegrity = 100.0;
 		
-		for(int i = 1; i <= 3; i++){
+		for(int i = 1; i <= 10; i++){
 			nearBridge.add(new Crewmember());
 		}
 		for(int i = 1; i <= 10; i++){
 			nearPhasers.add(new Crewmember());
 		}
-		for(int i = 1; i <= 15; i++){
+		for(int i = 1; i <= 10; i++){
 			nearPhotons.add(new Crewmember());
 		}
 		for(int i = 1; i <= 10; i++){
@@ -120,10 +120,6 @@ public class PlayerShip extends Ship {
 		shieldsUp = true;
 		shieldIntegrity = 100.0;
 		vengeanceObject = u;
-	}
-	
-	public int printIt(){
-		return nearBridge.size();
 	}
 	
 	public void movePerson(String loc, String dest){
