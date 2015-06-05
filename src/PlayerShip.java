@@ -58,7 +58,7 @@ public class PlayerShip extends Ship {
 		hullIntegrity = 100.0;
 		crewAlive = true;
 		captainAlive = true;
-		shieldsUp = true;
+		shieldsUp = false;
 		shieldIntegrity = 100.0;
 		
 		for(int i = 1; i <= 10; i++){

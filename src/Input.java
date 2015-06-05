@@ -40,7 +40,7 @@ public class Input implements Runnable{
 		} else if(command.contains("nap")){
 			System.out.println("Try to stay awake, captain!");
 		} else if(command.contains("suicide")){
-			System.out.println("You commit suicide, and your crew is devastated. They perish in battle against the Vengenace without your leadership.");
+			System.out.println("You commit suicide, and your crew is devastated. They perish in battle against the Vengenace without your leadership. Way to go.");
 			System.exit(5);
 		} else if(command.contains("kill")){
 			System.out.println("I don't reccommend killing, unless it's the Vengeance!");
@@ -83,16 +83,20 @@ public class Input implements Runnable{
 		} else if(command.contains("relocate") && command.contains("personnel")){ //relocate 8 bridge personnel to warp engines
 			//must be in this format:
 			//RELOCATE [num] [location] PERSONNEL TO [destination]
-			command = command.replaceAll(" the ", "");
-			int numLoc = command.indexOf("relocate ") + 9;
-			String temp = command.substring(numLoc);
-			int endNum = command.indexOf(" ", numLoc);
-			int num = Integer.valueOf(command.substring(numLoc, endNum).trim());
-			String loc = command.substring(endNum, command.indexOf(" personnel")).trim();
-			String dest = command.substring(command.indexOf("to ") + 3).trim();
-			for(int i = 1; i <= num; i++){
-				enterprise.movePerson(loc, dest);
-			}						
+			try{
+				command = command.replaceAll(" the ", "");
+				int numLoc = command.indexOf("relocate ") + 9;
+				String temp = command.substring(numLoc);
+				int endNum = command.indexOf(" ", numLoc);
+				int num = Integer.valueOf(command.substring(numLoc, endNum).trim());
+				String loc = command.substring(endNum, command.indexOf(" personnel")).trim();
+				String dest = command.substring(command.indexOf("to ") + 3).trim();
+				for(int i = 1; i <= num; i++){
+					enterprise.movePerson(loc, dest);
+				}				
+			} catch(IndexOutOfBoundsException e){
+				System.err.println("You cannot perform that operation.");
+			}
 			
 		} else if(command.contains("damage") && command.contains("report")){
 			
@@ -119,15 +123,17 @@ public class Input implements Runnable{
 			
 			//fire the photons
 			
-		} else if((command.contains("lower") || command.contains("down ")) && command.contains("shield")){
+		} else if((command.contains("lower") || command.contains("down")) && command.contains("shield")){
 
+			enterprise.setShieldsUp(false);
 			enterprise.setAftShields(0);
 			enterprise.setForeShields(0);
 			enterprise.setRightShields(0);
 			enterprise.setLeftShields(0);
 			
-		} else if((command.contains("raise") || command.contains("up ")) && command.contains("shield")){
+		} else if((command.contains("raise") || command.contains("up")) && command.contains("shield")){
 
+			enterprise.setShieldsUp(true);
 			enterprise.setAftShields(25);
 			enterprise.setForeShields(25);
 			enterprise.setRightShields(25);
@@ -227,5 +233,17 @@ public class Input implements Runnable{
 	
 	public int getWarpDriveHealth(){
 		return (int) enterprise.getWarpHealth();
+	}
+	
+	public int getPhaserLevel(){
+		return enterprise.getPhaserLevel();
+	}
+	
+	public boolean shieldsUp(){
+		return enterprise.isShieldsUp();
+	}
+	
+	public int getShieldLevel(){
+		return (int) enterprise.getShieldIntegrity();
 	}
 }
