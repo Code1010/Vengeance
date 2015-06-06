@@ -129,10 +129,10 @@ public class Game extends JPanel {
 			gd.drawString(String.format("%.0f%%", i.getLeftShields()), 330, 60);
 		}
 		
-		drawPhaserData(gd, 5, 330, Color.black);
-		
+		drawPhaserData(gd, 5, 330, Color.blue);
+		drawPhotonData(gd, 120, 330, Color.blue);
 		if(i.shieldsUp()){
-			drawShieldData(gd, 230, 330, Color.LIGHT_GRAY);
+			drawShieldData(gd, 235, 330, Color.LIGHT_GRAY);
 		}
 		
 	}
@@ -149,13 +149,46 @@ public class Game extends JPanel {
 		return new Color(d, d, d);
 	}
 	
+public void drawPhotonData(Graphics2D gd, int topX, int topY, Color bg){
+		
+		gd.setColor(bg);
+		gd.fillRect(topX, topY, 100, 130);
+		gd.setColor(getContrastingColor(bg));
+		gd.setFont(score);
+		gd.drawString("Photons", topX, topY + gd.getFont().getSize());
+		
+		gd.setFont(percentage);
+		gd.drawString(String.format("%d", i.getNumPhotons()), topX, topY + 50);
+		gd.drawString("LVL", topX, topY + 100);
+		
+		if(i.getNumPhotons() >= 32){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getPhotonHealth() >= 16){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX, topY + 50, (int)(((double)i.getNumPhotons()/64)*100), 20);
+		
+		if(i.getPhotonHealth() >= 50){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getPhotonHealth() >= 25){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX, topY + 100, i.getPhotonHealth(), 20);
+	}
+	
 	public void drawShieldData(Graphics2D gd, int topX, int topY, Color bg){
 		
 		gd.setColor(bg);
-		gd.fillRect(topX, topY, 200, 130);
+		gd.fillRect(topX, topY, 100, 130);
 		gd.setColor(getContrastingColor(bg));
 		gd.setFont(score);
-		gd.drawString("Shields", topX + 10, topY + gd.getFont().getSize());
+		gd.drawString("Shields", topX, topY + gd.getFont().getSize());
 		
 		gd.setFont(percentage);
 		gd.drawString(String.format("%d%%", i.getShieldGenHealth()), topX, topY + 50);
@@ -169,7 +202,7 @@ public class Game extends JPanel {
 			gd.setColor(Color.RED);
 		}
 		
-		gd.fillRect(topX, topY + 50, i.getShieldGenHealth() * 2, 20);
+		gd.fillRect(topX, topY + 50, i.getShieldGenHealth(), 20);
 		
 		if(i.getShieldLevel() >= 50){
 			gd.setColor(new Color(0, 255, 98));
@@ -179,16 +212,16 @@ public class Game extends JPanel {
 			gd.setColor(Color.RED);
 		}
 		
-		gd.fillRect(topX, topY + 100, i.getShieldLevel() * 2, 20);
+		gd.fillRect(topX, topY + 100, i.getShieldLevel(), 20);
 	}
 	
 	public void drawPhaserData(Graphics2D gd, int topX, int topY, Color bg){	
 		
 		gd.setColor(bg);
-		gd.fillRect(topX, topY, 200, 130);
+		gd.fillRect(topX, topY, 100, 130);
 		gd.setColor(getContrastingColor(bg));
 		gd.setFont(score);
-		gd.drawString("Phaser Banks", topX + 10, topY + gd.getFont().getSize());
+		gd.drawString("Phaser Banks", topX, topY + gd.getFont().getSize());
 		
 		gd.setFont(percentage);
 		gd.drawString(String.format("%d%%", i.getPhaserHealth()), topX, topY + 50);
@@ -202,7 +235,7 @@ public class Game extends JPanel {
 			gd.setColor(Color.RED);
 		}
 		
-		gd.fillRect(topX, topY + 50, i.getPhaserHealth() * 2, 20);
+		gd.fillRect(topX, topY + 50, i.getPhaserHealth(), 20);
 		
 		if(i.getPhaserLevel() >= 50){
 			gd.setColor(new Color(0, 255, 98));
@@ -212,7 +245,7 @@ public class Game extends JPanel {
 			gd.setColor(Color.RED);
 		}
 		
-		gd.fillRect(topX, topY + 100, i.getPhaserLevel() * 2, 20);
+		gd.fillRect(topX, topY + 100, i.getPhaserLevel(), 20);
 		
 		
 	}

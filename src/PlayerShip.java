@@ -569,7 +569,7 @@ public class PlayerShip extends Ship {
 		this.captainAlive = captainAlive;
 	}
 
-	public boolean isShieldsUp() {
+	public boolean shieldsUp() {
 		return shieldsUp;
 	}
 
