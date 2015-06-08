@@ -279,6 +279,14 @@ public class Input implements Runnable {
 
 	}
 
+	public void rechargePhaserBanks(){
+		enterprise.rechargePhasers();
+	}
+	
+	public int getImpulseHealth(){
+		return (int) enterprise.getImpulseHealth();
+	}
+	
 	public double getForeShields() {
 		return enterprise.getForeShields();
 	}
@@ -368,7 +376,7 @@ public class Input implements Runnable {
 	}
 
 	public int getShieldLevel() {
-		return (int) enterprise.getShieldIntegrity();
+		return (int) (enterprise.getForeShields() + enterprise.getAftShields() + enterprise.getRightShields() + enterprise.getLeftShields());
 	}
 
 	public int getNumPhotons() {

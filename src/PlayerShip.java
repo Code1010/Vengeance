@@ -12,6 +12,7 @@ public class PlayerShip extends Ship {
 	ArrayList<Crewmember> nearPhotons = new ArrayList<Crewmember>(); 
 	ArrayList<Crewmember> nearShieldGen = new ArrayList<Crewmember>(); 
 	
+	private int fruitLoops = 0;
 	private double impulseHealth;
 	private double warpHealth;
 	private double sensorHealth;
@@ -48,7 +49,7 @@ public class PlayerShip extends Ship {
 		leftShields = 0.0;
 		rightShields = 0.0;
 		impulseHealth = 59.0;
-		warpHealth = 0;
+		warpHealth = 2;
 		sensorHealth = 100.0;
 		shieldGenHealth = 100.0;
 		secondShieldGenHealth = 100.0;
@@ -247,6 +248,15 @@ public class PlayerShip extends Ship {
 		return ret;
 	}
 	
+	public void rechargePhasers(){
+		if((fruitLoops >= 25) && getPhaserLevel() <= 99){
+			fruitLoops = 0;
+			setPhaserLevel(getPhaserLevel()+1);
+		} else {
+				fruitLoops += nearPhasers.size();
+		}
+	}
+	
 	public String damageSystem(String system, double intensity){
 		String ret = "hull";
 		
@@ -303,125 +313,141 @@ public class PlayerShip extends Ship {
 	}
 
 	public String firePhasers(int power, String system) {
-		if (hasPhaserBanks() && phaserHealth > 0) {
-
-			if (getPhaserLevel() > power) {
-
-				if (hasAutoTarget()) {
-					double rand = 100 * Math.random();
-					if (getAutoTargetLevel() >= rand) {
-						setPhaserLevel(getPhaserLevel() - power);
-						return "<<Phasers fired successfully and hit the "
-								+ vengeanceObject.damageVengeance(power, system) + ">>";
+		if(nearPhasers.size() > 0){
+			if (hasPhaserBanks() && phaserHealth > 0) {
+	
+				if (getPhaserLevel() > power) {
+	
+					if (hasAutoTarget()) {
+						double rand = 100 * Math.random();
+						if (getAutoTargetLevel() >= rand) {
+							setPhaserLevel(getPhaserLevel() - power);
+							return "<<Phasers fired successfully and hit the "
+									+ vengeanceObject.damageVengeance(power, system) + ">>";
+						} else {
+							setPhaserLevel(getPhaserLevel() - power);
+							return "<<Phasers fired successfully, but missed the target>>";
+						}
 					} else {
+						if (getPhaserLevel() >= getMaxPhaserLevel() - 5) {
+							setPhaserLevel(getPhaserLevel() - power);
+							return "<<Phasers fired successfully and hit the "
+							+ vengeanceObject.damageVengeance(power, system) + ">>";
+						}
 						setPhaserLevel(getPhaserLevel() - power);
 						return "<<Phasers fired successfully, but missed the target>>";
 					}
+	
 				} else {
-					if (getPhaserLevel() >= getMaxPhaserLevel() - 5) {
-						setPhaserLevel(getPhaserLevel() - power);
-						return "<<Phasers fired successfully and hit the "
-						+ vengeanceObject.damageVengeance(power, system) + ">>";
-					}
-					setPhaserLevel(getPhaserLevel() - power);
-					return "<<Phasers fired successfully, but missed the target>>";
+					return "<<Insufficient Phaser Bank Power!>>";
 				}
-
+	
 			} else {
-				return "<<Insufficient Phaser Bank Power!>>";
+				return "<<Phaser Banks nonfunctional or unavailable>>";
 			}
-
 		} else {
-			return "<<Phaser Banks nonfunctional or unavailable>>";
+			return "<<No personnel to operate Phaser banks!>>";
 		}
 	}
 
 	public String firePhasers(int power) {
-		if (hasPhaserBanks() && phaserHealth > 0) {
-
-			if (getPhaserLevel() > power) {
-
-				if (hasAutoTarget()) {
-					double rand = 100 * Math.random();
-					if (getAutoTargetLevel() >= rand) {
-						setPhaserLevel(getPhaserLevel() - power);
-						return "<<Phasers fired successfully and hit the "
-								+ targetRandomSystem((double) power) + ">>";
+		if(nearPhasers.size() > 0){
+			if (hasPhaserBanks() && phaserHealth > 0) {
+	
+				if (getPhaserLevel() > power) {
+	
+					if (hasAutoTarget()) {
+						double rand = 100 * Math.random();
+						if (getAutoTargetLevel() >= rand) {
+							setPhaserLevel(getPhaserLevel() - power);
+							return "<<Phasers fired successfully and hit the "
+									+ targetRandomSystem((double) power) + ">>";
+						} else {
+							setPhaserLevel(getPhaserLevel() - power);
+							return "<<Phasers fired successfully, but missed the target>>";
+						}
 					} else {
-						setPhaserLevel(getPhaserLevel() - power);
-						return "<<Phasers fired successfully, but missed the target>>";
+						if (getPhaserLevel() >= getMaxPhaserLevel() - 5) {
+							setPhaserLevel(getPhaserLevel() - power);
+							return "<<Phasers fired successfully and hit the "
+									+ targetRandomSystem((double) power) + ">>";
+						} else {
+							setPhaserLevel(getPhaserLevel() - power);
+							return "<<Phasers fired successfully, but missed the target>>";
+						}					
 					}
+	
 				} else {
-					if (getPhaserLevel() >= getMaxPhaserLevel() - 5) {
-						setPhaserLevel(getPhaserLevel() - power);
-						return "<<Phasers fired successfully and hit the "
-								+ targetRandomSystem((double) power) + ">>";
-					} else {
-						setPhaserLevel(getPhaserLevel() - power);
-						return "<<Phasers fired successfully, but missed the target>>";
-					}					
+					return "<<Insufficient Phaser Bank Power!>>";
 				}
-
+	
 			} else {
-				return "<<Insufficient Phaser Bank Power!>>";
+				return "<<Phaser Banks nonfunctional or unavailable>>";
 			}
-
 		} else {
-			return "<<Phaser Banks nonfunctional or unavailable>>";
+			return "<<No personnel to operate Phaser banks!>>";
 		}
 	}
 
 	public String firePhotons(){
-		if((getNumPhotons() > 0) && photonHealth > 0){
-			if (hasAutoTarget()) {
-				double rand = 100 * Math.random();
-				if (getAutoTargetLevel() >= rand) {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully and hit the "
-							+ targetRandomSystem(Ship.PHOTON_DAMAGE) + ">>";
+		if(nearPhotons.size() > 0){
+			if((getNumPhotons() > 0) && photonHealth > 0){
+				if (hasAutoTarget()) {
+					double rand = 100 * Math.random();
+					if (getAutoTargetLevel() >= rand) {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully and hit the "
+								+ targetRandomSystem(Ship.PHOTON_DAMAGE) + ">>";
+					} else {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully, but missed the target>>";
+					}
 				} else {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully, but missed the target>>";
+					if (Math.random() > .745) {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully and hit the "
+								+ targetRandomSystem(Ship.PHOTON_DAMAGE) + ">>";
+					} else {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully, but missed the target>>";
+					}
 				}
 			} else {
-				if (Math.random() > .745) {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully and hit the "
-							+ targetRandomSystem(Ship.PHOTON_DAMAGE) + ">>";
-				} else {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully, but missed the target>>";
-				}
+				return "<<Photon torpedo bays nonfunctional or toepedoes unavailable>>";
 			}
 		} else {
-			return "<<Photon torpedo bays nonfunctional or toepedoes unavailable>>";
+			return "<<No personnel to operate Photon torpedo bays!>>";
 		}
 	}
 
 	public String firePhotons(String system){
-		if((getNumPhotons() > 0) && photonHealth > 0){
-			if (hasAutoTarget()) {
-				double rand = 100 * Math.random();
-				if (getAutoTargetLevel() >= rand) {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully and hit the "
-							+ vengeanceObject.damageVengeance(Ship.PHOTON_DAMAGE, system) + ">>";
+		if(nearPhotons.size() > 0){
+			if((getNumPhotons() > 0) && photonHealth > 0){
+				if (hasAutoTarget()) {
+					double rand = 100 * Math.random();
+					if (getAutoTargetLevel() >= rand) {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully and hit the "
+								+ vengeanceObject.damageVengeance(Ship.PHOTON_DAMAGE, system) + ">>";
+					} else {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully, but missed the target>>";
+					}
 				} else {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully, but missed the target>>";
+					if (Math.random() > .745) {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully and hit the "
+								+ vengeanceObject.damageVengeance(Ship.PHOTON_DAMAGE, system) + ">>";
+					} else {
+						setNumPhotons(getNumPhotons()-1);
+						return "<<Photon torpedo fired successfully, but missed the target>>";
+					}
 				}
 			} else {
-				if (Math.random() > .745) {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully and hit the "
-							+ vengeanceObject.damageVengeance(Ship.PHOTON_DAMAGE, system) + ">>";
-				} else {
-					setNumPhotons(getNumPhotons()-1);
-					return "<<Photon torpedo fired successfully, but missed the target>>";
-				}
+				return "<<Photon torpedo bays nonfunctional or toepedoes unavailable>>";
 			}
 		} else {
-			return "<<Photon torpedo bays nonfunctional or toepedoes unavailable>>";
+			return "<<No personnel to operate Photon torpedo bays!>>";
 		}
 	}
 	

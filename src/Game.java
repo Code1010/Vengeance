@@ -65,6 +65,7 @@ public class Game extends JPanel {
 			//This is for graphics
 			frame.repaint();
 			Thread.sleep(100);
+			i.rechargePhaserBanks();
 		}
 	}
 	
@@ -134,6 +135,9 @@ public class Game extends JPanel {
 		if(i.shieldsUp()){
 			drawShieldData(gd, 235, 330, Color.LIGHT_GRAY);
 		}
+		drawWarpData(gd, 5, 470, Color.LIGHT_GRAY);
+		drawImpulseData(gd, 120, 470, Color.LIGHT_GRAY);
+		drawSensorData(gd, 235, 470, Color.LIGHT_GRAY);
 		
 	}
 	
@@ -158,8 +162,8 @@ public void drawPhotonData(Graphics2D gd, int topX, int topY, Color bg){
 		gd.drawString("Photons", topX, topY + gd.getFont().getSize());
 		
 		gd.setFont(percentage);
-		gd.drawString(String.format("%d", i.getNumPhotons()), topX, topY + 50);
-		gd.drawString("LVL", topX, topY + 100);
+		gd.drawString(String.format("%d%%", i.getPhotonHealth()), topX, topY + 50);
+		gd.drawString(String.valueOf(i.getNumPhotons()), topX, topY + 100);
 		
 		if(i.getNumPhotons() >= 32){
 			gd.setColor(new Color(0, 255, 98));
@@ -169,7 +173,7 @@ public void drawPhotonData(Graphics2D gd, int topX, int topY, Color bg){
 			gd.setColor(Color.RED);
 		}
 		
-		gd.fillRect(topX, topY + 50, (int)(((double)i.getNumPhotons()/64)*100), 20);
+		gd.fillRect(topX, topY + 50, i.getPhotonHealth(), 20);
 		
 		if(i.getPhotonHealth() >= 50){
 			gd.setColor(new Color(0, 255, 98));
@@ -179,9 +183,81 @@ public void drawPhotonData(Graphics2D gd, int topX, int topY, Color bg){
 			gd.setColor(Color.RED);
 		}
 		
-		gd.fillRect(topX, topY + 100, i.getPhotonHealth(), 20);
+		gd.fillRect(topX, topY + 100, (int)(((double)i.getNumPhotons()/64)*100), 20);
 	}
 	
+	public void drawSensorData(Graphics2D gd, int topX, int topY, Color bg){
+		
+		gd.setColor(bg);
+		gd.fillRect(topX, topY, 100, 65);
+		
+		if(i.getSensorHealth() >= 50){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getSensorHealth() >= 25){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX, topY + 34, i.getShieldGenHealth(), 20);
+		
+		gd.setColor(getContrastingColor(bg));
+		gd.setFont(score);
+		gd.drawString("Sensors", topX, topY + gd.getFont().getSize());
+		
+		gd.setFont(percentage);
+		gd.drawString(String.format("%d%%", i.getSensorHealth()), topX, topY + 50);
+		
+	}
+
+	public void drawImpulseData(Graphics2D gd, int topX, int topY, Color bg){
+		
+		gd.setColor(bg);
+		gd.fillRect(topX, topY, 100, 65);
+		
+		if(i.getImpulseHealth() >= 50){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getImpulseHealth() >= 25){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX, topY + 34, i.getImpulseHealth(), 20);
+		
+		gd.setColor(getContrastingColor(bg));
+		gd.setFont(score);
+		gd.drawString("Impulse", topX, topY + gd.getFont().getSize());
+		
+		gd.setFont(percentage);
+		gd.drawString(String.format("%d%%", i.getImpulseHealth()), topX, topY + 50);
+		
+	}
+
+	public void drawWarpData(Graphics2D gd, int topX, int topY, Color bg){
+		
+		gd.setColor(bg);
+		gd.fillRect(topX, topY, 100, 65);
+		
+		if(i.getWarpDriveHealth() >= 50){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getWarpDriveHealth() >= 25){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX, topY + 34, i.getWarpDriveHealth(), 20);
+		
+		gd.setColor(getContrastingColor(bg));
+		gd.setFont(score);
+		gd.drawString("Warp Drive", topX, topY + gd.getFont().getSize());
+		
+		gd.setFont(percentage);
+		gd.drawString(String.format("%d%%", i.getWarpDriveHealth()), topX, topY + 50);
+		
+	}
+
 	public void drawShieldData(Graphics2D gd, int topX, int topY, Color bg){
 		
 		gd.setColor(bg);
