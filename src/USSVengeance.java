@@ -15,6 +15,7 @@ public class USSVengeance extends Ship{
 	private double shieldIntegrity;
 	private boolean shieldsUp;
 	private double bearing;
+	private int smokey;
 	
 	public USSVengeance(){
 		super();
@@ -33,6 +34,7 @@ public class USSVengeance extends Ship{
 		captainAlive = true;
 		shieldIntegrity = 100.0;
 		shieldsUp = true;
+		smokey = 0;
 	}
 	
 	public String damageSystem(String system, double intensity){
@@ -103,6 +105,15 @@ public class USSVengeance extends Ship{
 		return ret;
 	}
 
+	public void bear(){
+		if(smokey >= 25){
+			smokey = 0;
+			bearing += 2;
+		} else {
+			smokey++;
+		}
+	}
+	
 	public double getBearing() {
 		return bearing;
 	}

@@ -41,7 +41,7 @@ public class PlayerShip extends Ship {
 				true, 64, 100, 12,
 				560, true, 100, false, true,
 				false, 0, "Tritanium", 1500,
-				1500, Color.LIGHT_GRAY, "USS Enterprise", "James T. Kirk", "NCC 1701", 1500);
+				1500, Color.LIGHT_GRAY, "USS Enterprise", "James T. Kirk", "NCC 1701", 500);
 		
 		vengeanceObject = u;
 		foreShields = 0.0;
@@ -230,13 +230,42 @@ public class PlayerShip extends Ship {
 		String ret = "";
 		int dif = 0;
 		if(shieldsUp){
-			shieldIntegrity -= intensity;
-			ret = system + "...shields are holding";
-			if(shieldIntegrity < 0){
-				dif = (int) (shieldIntegrity * -1);
-				shieldIntegrity = 0;
-				ret = system + "...shields penetrated!";
-			}
+			
+			if((vengeanceObject.getBearing() > 315) || (vengeanceObject.getBearing() <= 45)){
+				setForeShields(getForeShields()-intensity);
+				ret = system + "...shields are holding";
+				if(getForeShields() < 0){
+					dif = (int) (getForeShields() * -1);
+					setForeShields(0);
+					ret = system + "...shields penetrated!";
+				}
+			} else if((vengeanceObject.getBearing() > 45) && (vengeanceObject.getBearing() <= 135)){
+				setLeftShields(getLeftShields()-intensity);
+				ret = system + "...shields are holding";
+				if(getLeftShields() < 0){
+					dif = (int) (getLeftShields() * -1);
+					setLeftShields(0);
+					ret = system + "...shields penetrated!";
+				}
+			} else if((vengeanceObject.getBearing() > 135) && (vengeanceObject.getBearing() <= 225)){
+				setAftShields(getAftShields()-intensity);
+				ret = system + "...shields are holding";
+				if(getAftShields() < 0){
+					dif = (int) (getAftShields() * -1);
+					setAftShields(0);
+					ret = system + "...shields penetrated!";
+				}
+			} else if((vengeanceObject.getBearing() > 225) && (vengeanceObject.getBearing() <= 315)){
+				setRightShields(getRightShields()-intensity);
+				ret = system + "...shields are holding";
+				if(getRightShields() < 0){
+					dif = (int) (getRightShields() * -1);
+					setRightShields(0);
+					ret = system + "...shields penetrated!";
+				}
+			} else {
+				System.err.println("Something went horribly wrong in the PlayerShip Class Line 230ish");
+			}			
 			
 			damageSystem(system, dif);
 			
@@ -262,12 +291,53 @@ public class PlayerShip extends Ship {
 		
 		if(system.contains("impulse")){
 			impulseHealth -= intensity;
+			
+			if(impulseHealth < 0){
+				impulseHealth *= -1;
+				for(Crewmember c: nearWarpDrive){
+					c.setHealth(c.getHealth() - intensity);
+					if(c.getHealth() <= 0){
+						c.kill();
+					}
+				}
+				impulseHealth = 0;
+			}
+			
+			
 			ret = "impulse engines";
 		} else if(system.contains("warp")){
 			warpHealth -= intensity;
+			
+			if(warpHealth < 0){
+				warpHealth *= -1;
+				for(Crewmember c: nearWarpDrive){
+					c.setHealth(c.getHealth() - intensity);
+					if(c.getHealth() <= 0){
+						c.kill();
+					}
+				}
+				warpHealth = 0;
+			}
+			
+			
+			
 			ret = "warp engines";
 		} else if(system.contains("sensor")){
 			sensorHealth -= intensity;
+			
+			if(sensorHealth < 0){
+				sensorHealth *= -1;
+				for(Crewmember c: nearSensors){
+					c.setHealth(c.getHealth() - intensity);
+					if(c.getHealth() <= 0){
+						c.kill();
+					}
+				}
+				sensorHealth = 0;
+			}
+			
+			
+			
 			ret = "sensor array";
 		} else if(system.contains("shield")){
 			if(shieldGenHealth > 0){
@@ -276,12 +346,19 @@ public class PlayerShip extends Ship {
 			}
 			
 			if(shieldGenHealth < 0){
-				secondShieldGenHealth -= (shieldGenHealth * -1);
+				shieldGenHealth *= -1;
+				for(Crewmember c: nearShieldGen){
+					c.setHealth(c.getHealth() - intensity);
+					if(c.getHealth() <= 0){
+						c.kill();
+					}
+				}
 				shieldGenHealth = 0;
-				ret = "secondary shield generator";
 			}
 			
-			if((shieldGenHealth <= 0) && (secondShieldGenHealth <= 0)){
+			
+			
+			if((shieldGenHealth <= 0)){
 				shieldsUp = false;
 			}
 			
@@ -290,9 +367,25 @@ public class PlayerShip extends Ship {
 			ret = "computer systems";
 		} else if(system.contains("phaser")){
 			phaserHealth -= intensity;
+			
+			if(phaserHealth < 0){
+				phaserHealth *= -1;
+				for(Crewmember c: nearPhasers){
+					c.setHealth(c.getHealth() - intensity);
+					if(c.getHealth() <= 0){
+						c.kill();
+					}
+				}
+				phaserHealth = 0;
+			}
+			
+			
 			ret = "phaser banks";
 		} else if(system.contains("photon")){
 			photonHealth -= intensity;
+			
+			
+			
 			ret = "photon torpedoes";
 		} else {
 			hullIntegrity -= intensity;
