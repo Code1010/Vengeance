@@ -11,6 +11,8 @@ public class Input implements Runnable {
 	public void run() {
 
 		Scanner in = new Scanner(System.in);
+//		Thread evil = new Thread(veng);
+//		evil.start();
 
 		while (true) {
 			System.out.print("> ");
@@ -269,6 +271,7 @@ public class Input implements Runnable {
 			} else if (command.contains("viewscreen")) {
 				System.out.println("Aye, Captain"); // change the viewscreen mode to
 													// show the vengeance
+				Game.drawViewscreen = !Game.drawViewscreen;
 			} else {
 				System.out.println("Be sure to use accepted starfleet protocol, Captain!");
 			}

@@ -1,5 +1,5 @@
 
-public class USSVengeance extends Ship{
+public class USSVengeance extends Ship implements Runnable{
 	
 	private double impulseHealth;
 	private double warpHealth;
@@ -224,6 +224,21 @@ public class USSVengeance extends Ship{
 
 	public void setShieldsUp(boolean shieldsUp) {
 		this.shieldsUp = shieldsUp;
+	}
+
+	@Override
+	public void run() {
+		//kill everything
+		while(true){
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		
 	}
 	
 }

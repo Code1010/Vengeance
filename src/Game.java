@@ -23,6 +23,7 @@ public class Game extends JPanel {
 	final Font percentage = new Font("Monospaced", Font.PLAIN, 20);
 	final Font score = new Font("Arial Narrow", Font.PLAIN, 20);
 	final Font people = new Font("Arial", Font.ITALIC, 26);
+	static boolean drawViewscreen = false;
 	
 	static Input i = new Input();
 	
@@ -76,69 +77,79 @@ public class Game extends JPanel {
 		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		gd.setColor(Color.WHITE);
 		gd.fillRect(0, 0, 700, 600);
+		
+		if(!drawViewscreen){
+			try {
+				BufferedImage img;
+				img = ImageIO.read(new File("src/finishedBG.png"));
+				gd.drawImage(img, 0, 0, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-		try {
-			BufferedImage img;
-			img = ImageIO.read(new File("src/finishedBG.png"));
-			gd.drawImage(img, 0, 0, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			gd.setColor(Color.black);
+			gd.setFont(score);
+			gd.setFont(people);
+			gd.drawString(i.getNearWarpDrive(), 195, 124);
+			gd.drawString(i.getNearShields(), 276, 181);
+			gd.drawString(i.getNearPhotons(), 438, 94);
+			gd.drawString(i.getNearPhasers(), 438, 271);
+			gd.drawString(i.getNearBridge(), 438, 174);
+			gd.drawString(i.getNearSensors(), 558, 179);
+			
+			
+			if(i.foreShieldsOn()){
+				gd.setColor(Color.BLUE);
+				gd.setFont(percentage);
+				gd.drawArc(530, 20, 100, 300, 270, 180);
+				gd.setColor(new Color(174, 191, 233));
+				gd.drawString(String.format("%.0f%%", i.getForeShields()), 631, 179);
+			}
+			
+			if(i.aftShieldsOn()){
+				gd.setColor(Color.blue);
+				gd.setFont(percentage);
+				gd.drawArc(60, 20, 100, 300, 90, 180);
+				gd.setColor(new Color(174, 191, 233));
+				gd.drawString(String.format("%.0f%%", i.getAftShields()), 65, 179);
+			}
+			
+			if(i.rightShieldsOn()){
+				gd.setColor(Color.BLUE);
+				gd.setFont(percentage);
+				gd.drawArc(105, 308, 482, 20, 180, 180);
+				gd.setColor(new Color(174, 191, 233));
+				gd.drawString(String.format("%.0f%%", i.getRightShields()), 330, 300);
+			}
+			
+			if(i.leftShieldsOn()){
+				gd.setColor(Color.BLUE);
+				gd.setFont(percentage);
+				gd.drawArc(105, 12, 482, 20, 0, 180);
+				gd.setColor(new Color(174, 191, 233));
+				gd.drawString(String.format("%.0f%%", i.getLeftShields()), 330, 60);
+			}
+			
+			drawPhaserData(gd, 5, 330, Color.blue);
+			drawPhotonData(gd, 120, 330, Color.blue);
+			if(i.shieldsUp()){
+				drawShieldData(gd, 235, 330, Color.LIGHT_GRAY);
+			}
+			drawWarpData(gd, 5, 470, Color.LIGHT_GRAY);
+			drawImpulseData(gd, 120, 470, Color.LIGHT_GRAY);
+			drawSensorData(gd, 235, 470, Color.LIGHT_GRAY);
+			drawPanel(gd, 350, 330, Color.DARK_GRAY);
+		} else {
+			try {
+				BufferedImage img;
+				img = ImageIO.read(new File("src/coolBG.png"));
+				gd.drawImage(img, 0, 0, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		gd.setColor(Color.black);
-		gd.setFont(score);
-		gd.setFont(people);
-		gd.drawString(i.getNearWarpDrive(), 195, 124);
-		gd.drawString(i.getNearShields(), 276, 181);
-		gd.drawString(i.getNearPhotons(), 438, 94);
-		gd.drawString(i.getNearPhasers(), 438, 271);
-		gd.drawString(i.getNearBridge(), 438, 174);
-		gd.drawString(i.getNearSensors(), 558, 179);
-		
-		
-		if(i.foreShieldsOn()){
-			gd.setColor(Color.BLUE);
-			gd.setFont(percentage);
-			gd.drawArc(530, 20, 100, 300, 270, 180);
-			gd.setColor(new Color(174, 191, 233));
-			gd.drawString(String.format("%.0f%%", i.getForeShields()), 631, 179);
-		}
-		
-		if(i.aftShieldsOn()){
-			gd.setColor(Color.blue);
-			gd.setFont(percentage);
-			gd.drawArc(60, 20, 100, 300, 90, 180);
-			gd.setColor(new Color(174, 191, 233));
-			gd.drawString(String.format("%.0f%%", i.getAftShields()), 65, 179);
-		}
-		
-		if(i.rightShieldsOn()){
-			gd.setColor(Color.BLUE);
-			gd.setFont(percentage);
-			gd.drawArc(105, 308, 482, 20, 180, 180);
-			gd.setColor(new Color(174, 191, 233));
-			gd.drawString(String.format("%.0f%%", i.getRightShields()), 330, 300);
-		}
-		
-		if(i.leftShieldsOn()){
-			gd.setColor(Color.BLUE);
-			gd.setFont(percentage);
-			gd.drawArc(105, 12, 482, 20, 0, 180);
-			gd.setColor(new Color(174, 191, 233));
-			gd.drawString(String.format("%.0f%%", i.getLeftShields()), 330, 60);
-		}
-		
-		drawPhaserData(gd, 5, 330, Color.blue);
-		drawPhotonData(gd, 120, 330, Color.blue);
-		if(i.shieldsUp()){
-			drawShieldData(gd, 235, 330, Color.LIGHT_GRAY);
-		}
-		drawWarpData(gd, 5, 470, Color.LIGHT_GRAY);
-		drawImpulseData(gd, 120, 470, Color.LIGHT_GRAY);
-		drawSensorData(gd, 235, 470, Color.LIGHT_GRAY);
-		drawPanel(gd, 350, 330, Color.DARK_GRAY);
-		
 	}
 	
 	public Color getContrastingColor(Color c){
@@ -373,7 +384,9 @@ public class Game extends JPanel {
 		}
 		
 		gd.fillRect(topX, topY + 100, i.getPhaserLevel(), 20);
-		
+	}
+	
+	public void drawViewScreen(){
 		
 	}
 	
