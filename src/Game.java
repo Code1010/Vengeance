@@ -88,7 +88,6 @@ public class Game extends JPanel {
 		
 		gd.setColor(Color.black);
 		gd.setFont(score);
-		gd.drawString("Score: " + getSecondsElapsed(), 0, 20);
 		gd.setFont(people);
 		gd.drawString(i.getNearWarpDrive(), 195, 124);
 		gd.drawString(i.getNearShields(), 276, 181);
@@ -138,6 +137,7 @@ public class Game extends JPanel {
 		drawWarpData(gd, 5, 470, Color.LIGHT_GRAY);
 		drawImpulseData(gd, 120, 470, Color.LIGHT_GRAY);
 		drawSensorData(gd, 235, 470, Color.LIGHT_GRAY);
+		drawPanel(gd, 350, 330, Color.DARK_GRAY);
 		
 	}
 	
@@ -153,7 +153,58 @@ public class Game extends JPanel {
 		return new Color(d, d, d);
 	}
 	
-public void drawPhotonData(Graphics2D gd, int topX, int topY, Color bg){
+	public void drawPanel(Graphics2D gd, int topX, int topY, Color bg){
+		
+		int totalPeople = (Integer.valueOf(i.getNearBridge()) + Integer.valueOf(i.getNearPhasers()) + Integer.valueOf(i.getNearPhotons()) + Integer.valueOf(i.getNearSensors()) + Integer.valueOf(i.getNearShields()) + Integer.valueOf(i.getNearWarpDrive()));
+		
+		gd.setColor(bg);
+		gd.fillRect(topX, topY, 325, 205);
+		
+		gd.setColor(bg.brighter());
+		gd.fillRect(topX, topY + 43, 325, 20);
+		gd.fillRect(topX, topY + 66, 325, 20);
+		
+		if(totalPeople >= 30){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getPhotonHealth() >= 15){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX, topY + 43, (int) (((double)totalPeople/60)*325), 20);
+		
+		if(totalPeople >= 30){
+			gd.setColor(new Color(0, 255, 98));
+		} else if(i.getPhotonHealth() >= 15){
+			gd.setColor(new Color(211, 72, 20));
+		} else {
+			gd.setColor(Color.RED);
+		}
+		
+		gd.fillRect(topX, topY + 66, (int) ((i.getHullHealth()/100.0) * 325), 20);
+		
+		gd.setColor(getContrastingColor(bg));
+		gd.setFont(score);
+		gd.drawString("USS Enterprise NCC-1701", topX, topY + 20);
+		gd.drawString("Score: " + getSecondsElapsed(), topX, topY + 40);
+		
+		gd.setColor(Color.black);
+		gd.drawString(String.format("Crew: %d/60", totalPeople), topX, topY + 60);
+		gd.drawString(String.format("Hull Integrity: %d%%", i.getHullHealth()), topX, topY + 82);
+		
+//		try {
+//			BufferedImage img;
+//			img = ImageIO.read(new File("src/starfleet2.png"));
+//			gd.drawImage(img, 0, 0, null);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+	}
+	
+	public void drawPhotonData(Graphics2D gd, int topX, int topY, Color bg){
 		
 		gd.setColor(bg);
 		gd.fillRect(topX, topY, 100, 130);

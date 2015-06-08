@@ -374,7 +374,11 @@ public class Input implements Runnable {
 	public boolean shieldsUp() {
 		return enterprise.shieldsUp();
 	}
-
+	
+	public int getHullHealth(){
+		return (int) enterprise.getHullIntegrity();
+	}
+	
 	public int getShieldLevel() {
 		return (int) (enterprise.getForeShields() + enterprise.getAftShields() + enterprise.getRightShields() + enterprise.getLeftShields());
 	}

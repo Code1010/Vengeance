@@ -384,7 +384,16 @@ public class PlayerShip extends Ship {
 		} else if(system.contains("photon")){
 			photonHealth -= intensity;
 			
-			
+			if(photonHealth < 0){
+				photonHealth *= -1;
+				for(Crewmember c: nearPhotons){
+					c.setHealth(c.getHealth() - intensity);
+					if(c.getHealth() <= 0){
+						c.kill();
+					}
+				}
+				photonHealth = 0;
+			}
 			
 			ret = "photon torpedoes";
 		} else {
