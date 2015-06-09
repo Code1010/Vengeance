@@ -40,12 +40,10 @@ public class Input implements Runnable {
 				System.out.println("Ahhhhh. That was refreshing.");
 			} else if (command.contains("joke")) {
 				System.out.println("Haha!");
-			} else if (command.contains("nap")) {
+			} else if (command.contains("nap") || command.contains("sleep")) {
 				System.out.println("Try to stay awake, captain!");
 			} else if (command.contains("suicide")) {
-				System.out
-						.println("You commit suicide, and your crew is devastated. They perish in battle against the Vengenace without your leadership. Way to go.");
-				System.exit(5);
+				System.out.println("Bad idea. You have so much to live for...like not getting killed by the Vengeance!");
 			} else if (command.contains("kill")) {
 				System.out
 						.println("I don't reccommend killing, unless it's the Vengeance!");
@@ -57,6 +55,8 @@ public class Input implements Runnable {
 				System.exit(5);
 			} else if (command.contains("maroon")) {
 				System.out.println("I don't reccommend marooning the crew.");
+			} else if (command.contains("course")) {
+				System.out.println("I cannot set a course. The helm is not responding, Captain!");
 			} else if (command.contains("ram")) {
 				System.out
 						.println("Captain, the Vengeance is much larger and more massive than the Enterprise. Ramming it will have little effect.");
@@ -171,9 +171,87 @@ public class Input implements Runnable {
 					System.out.println("Cannot comply: sheields are down");
 				}
 				
-			} else if (command.contains("fix") || command.contains("repair")) {
+			} else if (command.contains("repair")) {
 	
-				// do something to fix the broken thing
+				command = command.replaceAll(" the ", " ");
+				int repairIndex = command.indexOf("repair") + 7;
+				String system = command.substring(repairIndex);
+				if(system.contains("warp")){
+					enterprise.setWarpHealth(getWarpDriveHealth() + Integer.valueOf(getNearWarpDrive()));
+					if(enterprise.getWarpHealth() > 100){
+						enterprise.setWarpHealth(100.0);
+					}
+				} else if(system.contains("impulse")){
+					enterprise.setImpulseHealth(getImpulseHealth() + Integer.valueOf(getNearWarpDrive()));
+					if(enterprise.getImpulseHealth() > 100){
+						enterprise.setImpulseHealth(100.0);
+					}
+				} else if(system.contains("shield")){
+					enterprise.setShieldGenHealth(getShieldGenHealth() + Integer.valueOf(getNearShields()));
+					if(enterprise.getShieldGenHealth() > 100){
+						enterprise.setShieldGenHealth(100.0);
+					}
+				} else if(system.contains("photon")){
+					enterprise.setPhotonHealth(getPhotonHealth() + Integer.valueOf(getNearPhotons()));
+					if(enterprise.getPhotonHealth() > 100){
+						enterprise.setPhotonHealth(100.0);
+					}
+				} else if(system.contains("phaser")){
+					enterprise.setPhaserHealth(getPhaserHealth() + Integer.valueOf(getNearPhasers()));
+					if(enterprise.getPhaserHealth() > 100){
+						enterprise.setPhaserHealth(100.0);
+					}
+				} else if(system.contains("hull")){
+					System.out.println("I'm sorry, Captain, we don't have the resources to fix the hull out here in deep space.");
+				} else if(system.contains("sensor")){
+					enterprise.setSensorHealth(getSensorHealth() + Integer.valueOf(getNearSensors()));
+					if(enterprise.getSensorHealth() > 100){
+						enterprise.setSensorHealth(100.0);
+					}
+				} else {
+					System.out.println("Uhhh...We're not sure what you want us to fix, Captain.");
+				}
+	
+			} else if (command.contains("fix")) {
+	
+				command = command.replaceAll(" the ", " ");
+				int repairIndex = command.indexOf("fix") + 4;
+				String system = command.substring(repairIndex);
+				if(system.contains("warp")){
+					enterprise.setWarpHealth(getWarpDriveHealth() + Integer.valueOf(getNearWarpDrive()));
+					if(enterprise.getWarpHealth() > 100){
+						enterprise.setWarpHealth(100.0);
+					}
+				} else if(system.contains("impulse")){
+					enterprise.setImpulseHealth(getImpulseHealth() + Integer.valueOf(getNearWarpDrive()));
+					if(enterprise.getImpulseHealth() > 100){
+						enterprise.setImpulseHealth(100.0);
+					}
+				} else if(system.contains("shield")){
+					enterprise.setShieldGenHealth(getShieldGenHealth() + Integer.valueOf(getNearShields()));
+					if(enterprise.getShieldGenHealth() > 100){
+						enterprise.setShieldGenHealth(100.0);
+					}
+				} else if(system.contains("photon")){
+					enterprise.setPhotonHealth(getPhotonHealth() + Integer.valueOf(getNearPhotons()));
+					if(enterprise.getPhotonHealth() > 100){
+						enterprise.setPhotonHealth(100.0);
+					}
+				} else if(system.contains("phaser")){
+					enterprise.setPhaserHealth(getPhaserHealth() + Integer.valueOf(getNearPhasers()));
+					if(enterprise.getPhaserHealth() > 100){
+						enterprise.setPhaserHealth(100.0);
+					}
+				} else if(system.contains("hull")){
+					System.out.println("I'm sorry, Captain, we don't have the resources to fix the hull out here in deep space.");
+				} else if(system.contains("sensor")){
+					enterprise.setSensorHealth(getSensorHealth() + Integer.valueOf(getNearSensors()));
+					if(enterprise.getSensorHealth() > 100){
+						enterprise.setSensorHealth(100.0);
+					}
+				} else {
+					System.out.println("Uhhh...We're not sure what you want us to fix, Captain.");
+				}
 	
 			} else if (command.contains("relocate")
 					&& command.contains("personnel")) { // relocate 8 bridge
@@ -199,9 +277,27 @@ public class Input implements Runnable {
 				}
 	
 			} else if (command.contains("damage") && command.contains("report")) {
-	
-				//do it!
-	
+
+				System.out.println("****************************************");
+				System.out.println("*USS ENTERPRISE NCC 1701 DAMAGE REPORT:*");
+				System.out.println("________________________________________");
+				System.out.printf("|SHIELDS: %d%% Integrity\n", getShieldGenHealth());
+				System.out.printf("|WARP DRIVE: %d%% Integrity\n", getWarpDriveHealth());
+				System.out.printf("|IMPULSE ENGINES: %d%% Integrity\n", getImpulseHealth());
+				System.out.printf("|PHOTONS: %d%% Integrity\n", getPhotonHealth());
+				System.out.printf("|PHASER BANKS: %d%% Integrity\n", getPhaserHealth());
+				System.out.printf("|SENSOR ARRAYS: %d%% Integrity\n", getSensorHealth());
+				System.out.printf("|HULL: %d%% Integrity\n", getHullHealth());
+				int totalPeople =  (Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearPhasers()) + Integer.valueOf(getNearPhotons()) + Integer.valueOf(getNearSensors()) + Integer.valueOf(getNearShields()) + Integer.valueOf(getNearWarpDrive()));
+				if(totalPeople == 60){
+					System.out.println("|NO CASUALTIES TO REPORT.");
+				} else {
+					System.out.printf("CREW CASUALTIES: %d\n", 60 - totalPeople);
+				}
+				
+				System.out.println("|\n|_______________________________________");
+				System.out.println("*END OF DAMAGE REPORT                  *");
+				System.out.println("****************************************");
 			} else if (command.contains("phaser") && command.contains("fire")) {
 	
 				if (command.contains(" at ")) { // fire phasers at the hull power
@@ -239,26 +335,37 @@ public class Input implements Runnable {
 			} else if ((command.contains("lower") || command.contains("down"))
 					&& command.contains("shield")) {
 	
-				enterprise.setShieldsUp(false);
-				enterprise.setAftShields(0);
-				enterprise.setForeShields(0);
-				enterprise.setRightShields(0);
-				enterprise.setLeftShields(0);
+				if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
+					enterprise.setShieldsUp(false);
+					enterprise.setAftShields(0);
+					enterprise.setForeShields(0);
+					enterprise.setRightShields(0);
+					enterprise.setLeftShields(0);
+				} else {
+					System.out.println("No personnel available to operate the shields!");
+				}
 	
 			} else if ((command.contains("raise") || command.contains("up"))
 					&& command.contains("shield")) {
-	
-				enterprise.setShieldsUp(true);
-				enterprise.setAftShields(25);
-				enterprise.setForeShields(25);
-				enterprise.setRightShields(25);
-				enterprise.setLeftShields(25);
+				
+				if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
+					enterprise.setShieldsUp(true);
+					enterprise.setAftShields(25);
+					enterprise.setForeShields(25);
+					enterprise.setRightShields(25);
+					enterprise.setLeftShields(25);
+				} else {
+					System.out.println("No personnel available to operate the shields!");
+				}
 	
 			} else if (command.contains("warp")) {
 				if (enterprise.getWarpHealth() >= 0) {
+					veng.setNumPhotons(getNumPhotons() - (int)(getWarpDriveHealth()/Ship.PHOTON_DAMAGE));
+					veng.setNumPhotons(getNumPhotons() - (int)(getImpulseHealth()/Ship.PHOTON_DAMAGE));
 					System.out.println("Going to warp, Captain.");
-					System.out
-							.println("Captain, the vengeance has once again crippled the warp drives!");
+					System.out.println("Captain, the vengeance has once again crippled our propulsion systems!");
+					enterprise.setWarpHealth(0);
+					enterprise.setImpulseHealth(0);
 				} else {
 					System.out
 							.println("Captain, the Warp Drives are not functional!");
@@ -269,15 +376,14 @@ public class Input implements Runnable {
 				System.out
 						.println("The mantis shrimps fired successfully, but the cold vacuum of space killed all of them instantly. Good job, you singlehandedly extincted a whole species.");
 			} else if (command.contains("viewscreen")) {
-				System.out.println("Aye, Captain"); // change the viewscreen mode to
+				System.out.println("On screen, captain"); // change the viewscreen mode to
 													// show the vengeance
 				Game.drawViewscreen = !Game.drawViewscreen;
 			} else {
 				System.out.println("Be sure to use accepted starfleet protocol, Captain!");
 			}
 		} catch(Exception e){
-//			System.out.println("Be sure to use accepted starfleet protocol, Captain!");
-			e.printStackTrace();
+			System.out.println("Are you feeling alright, Captain? You aren't making sense.");
 		}
 
 	}
