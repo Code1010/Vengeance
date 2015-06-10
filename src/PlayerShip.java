@@ -282,7 +282,7 @@ public class PlayerShip extends Ship implements Runnable{
 			fruitLoops = 0;
 			setPhaserLevel(getPhaserLevel()+1);
 		} else {
-				fruitLoops += nearPhasers.size();
+				fruitLoops += nearPhasers.size() / 3;
 		}
 	}
 	
@@ -761,8 +761,9 @@ public class PlayerShip extends Ship implements Runnable{
 			
 			int random = (int) (Math.random() * 10) + 1;
 			
+			if(random <= 10){
 				vengeanceObject.bear();
-
+			}
 			
 			try {
 				Thread.sleep(1000);

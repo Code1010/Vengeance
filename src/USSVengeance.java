@@ -20,19 +20,19 @@ public class USSVengeance extends Ship{
 	public USSVengeance(){
 		super();
 		
-		impulseHealth = 100.0;
-		warpHealth = 100.0;
-		warpHealth = 100.0;
-		sensorHealth = 100.0;
-		shieldGenHealth = 100.0;
-		secondShieldGenHealth = 100.0;
-		computerHealth = 100.0;
-		phaserHealth = 100.0;
-		photonHealth = 100.0;
-		hullIntegrity = 100.0;
+		impulseHealth = 360.0;
+		warpHealth = 360.0;
+		warpHealth = 360.0;
+		sensorHealth = 360.0;
+		shieldGenHealth = 360.0;
+		secondShieldGenHealth = 360.0;
+		computerHealth = 360.0;
+		phaserHealth = 360.0;
+		photonHealth = 360.0;
+		hullIntegrity = 360.0;
 		crewAlive = true;
 		captainAlive = true;
-		shieldIntegrity = 100.0;
+		shieldIntegrity = 360.0;
 		shieldsUp = true;
 		smokey = 0;
 	}
@@ -105,6 +105,13 @@ public class USSVengeance extends Ship{
 		return ret;
 	}
 
+	public void rechargeShields(){
+		
+		if(shieldIntegrity < 360)
+			shieldIntegrity += .5;
+		
+	}
+	
 	public void bear(){
 		
 		boolean changeDir = false;

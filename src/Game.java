@@ -67,6 +67,7 @@ public class Game extends JPanel {
 			frame.repaint();
 			Thread.sleep(100);
 			i.rechargePhaserBanks();
+			i.rechargeVengeanceShields();
 		}
 	}
 	
@@ -203,12 +204,28 @@ public class Game extends JPanel {
 		gd.setColor(Color.black);
 		gd.drawString(String.format("Crew: %d/60", totalPeople), topX, topY + 60);
 		gd.drawString(String.format("Hull Integrity: %d%%", i.getHullHealth()), topX, topY + 82);
+		gd.drawString("V. Bearing", topX + 20, topY + 200);
 		
-		gd.drawString(String.format("VENGEANCE BEARING: %.2f", i.getVengeanceBearing()), topX + 15, topY + 200);
 		gd.setColor(bg.brighter());
 		gd.fillOval(topX + 15, topY + 100, 75, 75);
-		gd.setColor(Color.red);
-		gd.fillArc(topX + 15, topY + 100, 75, 75, 0, (int) i.getVengeanceBearing());
+		gd.fillOval(topX + 105, topY + 100, 40, 40);
+		gd.fillOval(topX + 155, topY + 100, 40, 40);
+		
+		if(i.getSensorHealth() > 0){
+			
+			gd.setFont(score);
+			gd.setColor(Color.red);
+			gd.fillArc(topX + 15, topY + 100, 75, 75, (int) i.getVengeanceBearing(), 5);
+			gd.fillArc(topX + 105, topY + 100, 40, 40, 0, i.getVengeanceShields());
+			gd.fillArc(topX + 155, topY + 100, 40, 40, 0, i.getVengeanceHullHealth());
+			gd.setColor(Color.black);
+			gd.drawString(String.format("%.2f", i.getVengeanceBearing()), topX + 28, topY + 125);
+			gd.drawString("Shield", topX + 103, topY + 127);
+			gd.drawString("Hull", topX + 160, topY + 127);
+			
+			
+			
+		}
 		
 	}
 	
