@@ -11,8 +11,8 @@ public class Input implements Runnable {
 	public void run() {
 
 		Scanner in = new Scanner(System.in);
-//		Thread evil = new Thread(veng);
-//		evil.start();
+		Thread evil = new Thread(enterprise);
+		evil.start();
 
 		while (true) {
 			System.out.print("> ");
@@ -494,5 +494,9 @@ public class Input implements Runnable {
 
 	public int getNumPhotons() {
 		return enterprise.getNumPhotons();
+	}
+	
+	public double getVengeanceBearing(){
+		return veng.getBearing();
 	}
 }

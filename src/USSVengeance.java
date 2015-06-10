@@ -1,5 +1,5 @@
 
-public class USSVengeance extends Ship implements Runnable{
+public class USSVengeance extends Ship{
 	
 	private double impulseHealth;
 	private double warpHealth;
@@ -106,11 +106,22 @@ public class USSVengeance extends Ship implements Runnable{
 	}
 
 	public void bear(){
-		if(smokey >= 25){
-			smokey = 0;
-			bearing += 2;
+		
+		boolean changeDir = false;
+		if(Math.random() > .65){
+			changeDir = !changeDir;
+		}
+		
+		if(changeDir){
+			bearing += (Math.random() * 45);
 		} else {
-			smokey++;
+			bearing -= (Math.random() * 45);
+		}
+		
+		if(bearing < 0){
+			bearing = bearing + 360;
+		} else if(bearing > 360){
+			bearing = bearing - 360;
 		}
 	}
 	
@@ -224,21 +235,6 @@ public class USSVengeance extends Ship implements Runnable{
 
 	public void setShieldsUp(boolean shieldsUp) {
 		this.shieldsUp = shieldsUp;
-	}
-
-	@Override
-	public void run() {
-		//kill everything
-		while(true){
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	
-		
 	}
 	
 }

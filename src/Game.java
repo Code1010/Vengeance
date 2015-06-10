@@ -204,14 +204,11 @@ public class Game extends JPanel {
 		gd.drawString(String.format("Crew: %d/60", totalPeople), topX, topY + 60);
 		gd.drawString(String.format("Hull Integrity: %d%%", i.getHullHealth()), topX, topY + 82);
 		
-//		try {
-//			BufferedImage img;
-//			img = ImageIO.read(new File("src/starfleet2.png"));
-//			gd.drawImage(img, 0, 0, null);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		gd.drawString(String.format("VENGEANCE BEARING: %.2f", i.getVengeanceBearing()), topX + 15, topY + 200);
+		gd.setColor(bg.brighter());
+		gd.fillOval(topX + 15, topY + 100, 75, 75);
+		gd.setColor(Color.red);
+		gd.fillArc(topX + 15, topY + 100, 75, 75, 0, (int) i.getVengeanceBearing());
 		
 	}
 	

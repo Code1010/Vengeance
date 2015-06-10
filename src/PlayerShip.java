@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class PlayerShip extends Ship {
+public class PlayerShip extends Ship implements Runnable{
 	
 	boolean[] sectionsSealed = {false, false, false, false, false, false, false};
 	
@@ -751,6 +751,27 @@ public class PlayerShip extends Ship {
 
 	public void setRightShields(double rightShields) {
 		this.rightShields = rightShields;
+	}
+	
+	//THIS IS THE VENGEANCE LOOP
+	@Override
+	public void run() {
+		//kill everything
+		while(true){
+			
+			int random = (int) (Math.random() * 10) + 1;
+			
+				vengeanceObject.bear();
+
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		
 	}
 	
 }
