@@ -396,6 +396,10 @@ public class Input implements Runnable {
 		veng.rechargeShields();
 	}
 	
+	public int getVengeanceSensors(){
+		return (int) veng.getSensorHealth();
+	}
+	
 	public int getImpulseHealth(){
 		return (int) enterprise.getImpulseHealth();
 	}
@@ -464,6 +468,14 @@ public class Input implements Runnable {
 		return (int) enterprise.getPhaserHealth();
 	}
 
+	public int getVengeancePhotons(){
+		return veng.getNumPhotons();
+	}
+	
+	public int getVengeancePhaserLevel(){
+		return (int) veng.getPhaserLevel();
+	}
+	
 	public int getPhotonHealth() {
 		return (int) enterprise.getPhotonHealth();
 	}

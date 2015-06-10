@@ -408,9 +408,18 @@ public class PlayerShip extends Ship implements Runnable{
 	private String targetRandomSystem(double p) {
 		String[] enemySystems = { "impulse", "warp", "sensor", "shieldGen",
 				"2ndShieldGen", "computer", "phaser banks", "photons", "hull" };
-		int index = (int) ((enemySystems.length - 1) * Math.random());
+		int index = (int) ((enemySystems.length) * Math.random());
 		String system = enemySystems[index];
 		vengeanceObject.damageVengeance(p, system);
+		return system;
+	}
+	
+	private String damageRandomSystem(double p) {
+		String[] enemySystems = { "impulse", "warp", "sensor", "shieldGen",
+				"2ndShieldGen", "computer", "phaser banks", "photons", "hull" };
+		int index = (int) ((enemySystems.length) * Math.random());
+		String system = enemySystems[index];
+		damage(system, p);
 		return system;
 	}
 
@@ -759,14 +768,47 @@ public class PlayerShip extends Ship implements Runnable{
 		//kill everything
 		while(true){
 			
-			int random = (int) (Math.random() * 10) + 1;
+			int random = (int) (Math.random() * 5);
 			
-			if(random <= 10){
+			switch(random){
+			
+			default:
+				System.err.println("Something that shouldn't have happened happened. Believe it.");
+				break;
+			case 0: 
 				vengeanceObject.bear();
+				break;
+			case 1: 
+				//fire photons
+				if(vengeanceObject.getNumPhotons() > 0){
+					vengeanceObject.setNumPhotons(vengeanceObject.getNumPhotons() - 1);
+					damageRandomSystem(Ship.PHOTON_DAMAGE);
+				} //else you got lucky
+				break;
+			case 2: 
+				if(vengeanceObject.getPhaserLevel() > 0){
+					int damage = (int)(Math.random() * 100);
+					vengeanceObject.setPhaserLevel(vengeanceObject.getPhaserLevel() - damage);
+					damageRandomSystem(2 * damage);
+				}
+				break;
+			case 3: 
+				if(vengeanceObject.getNumPhotons() > 0){
+					vengeanceObject.setNumPhotons(vengeanceObject.getNumPhotons() - 1);
+					damageRandomSystem(2 * Ship.PHOTON_DAMAGE);
+				}
+				break;
+			case 4:
+				if(vengeanceObject.getPhaserLevel() > 0){
+					int power = (int)(Math.random() * 100);
+					vengeanceObject.setPhaserLevel(vengeanceObject.getPhaserLevel() - power);
+					damageRandomSystem(2 * power);
+				}
+				break;				
 			}
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

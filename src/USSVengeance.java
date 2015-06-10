@@ -120,9 +120,9 @@ public class USSVengeance extends Ship{
 		}
 		
 		if(changeDir){
-			bearing += (Math.random() * 45);
+			bearing += (Math.random() * 75);
 		} else {
-			bearing -= (Math.random() * 45);
+			bearing -= (Math.random() * 75);
 		}
 		
 		if(bearing < 0){

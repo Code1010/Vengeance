@@ -140,8 +140,8 @@ public class Ship {
 		incomingAlarm = true;
 		phaserBanks = true;
 		photonTorps = true;
-		numPhotons = 640;
-		phaserLevel = 85;
+		numPhotons = 360;
+		phaserLevel = 360;
 		phaserRecharge = 20;
 		photonReload = 5; //lower is better
 		autoTarget = true;

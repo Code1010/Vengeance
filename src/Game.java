@@ -68,6 +68,13 @@ public class Game extends JPanel {
 			Thread.sleep(100);
 			i.rechargePhaserBanks();
 			i.rechargeVengeanceShields();
+			if(i.getHullHealth() <= 0){
+				console.stop();
+				System.gc();
+				frame.setVisible(false);
+				System.out.println("You survived against the vengeance for " + getSecondsElapsed() + " seconds");
+				break;
+			}
 		}
 	}
 	
@@ -142,14 +149,27 @@ public class Game extends JPanel {
 			drawSensorData(gd, 235, 470, Color.LIGHT_GRAY);
 			drawPanel(gd, 350, 330, Color.DARK_GRAY);
 		} else {
-			try {
-				BufferedImage img;
-				img = ImageIO.read(new File("src/coolBG.png"));
-				gd.drawImage(img, 0, 0, null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			
+			if(i.getSensorHealth() > 0){
+				try {
+					BufferedImage img;
+					img = ImageIO.read(new File("src/Uss_vengenace.jpg"));
+					gd.drawImage(img, -500, -500, null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					BufferedImage img;
+					img = ImageIO.read(new File("src/shirmp.jpg"));
+					gd.drawImage(img, 0, 0, null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			
 		}
 	}
 	
@@ -204,27 +224,42 @@ public class Game extends JPanel {
 		gd.setColor(Color.black);
 		gd.drawString(String.format("Crew: %d/60", totalPeople), topX, topY + 60);
 		gd.drawString(String.format("Hull Integrity: %d%%", i.getHullHealth()), topX, topY + 82);
-		gd.drawString("V. Bearing", topX + 20, topY + 200);
+		
 		
 		gd.setColor(bg.brighter());
-		gd.fillOval(topX + 15, topY + 100, 75, 75);
+		gd.fillOval(topX + 15, topY + 100, 85, 85);
 		gd.fillOval(topX + 105, topY + 100, 40, 40);
 		gd.fillOval(topX + 155, topY + 100, 40, 40);
+		gd.fillOval(topX + 205, topY + 100, 40, 40);//phaser
+		gd.fillOval(topX + 255, topY + 100, 40, 40);//photons
+		gd.fillOval(topX + 105, topY + 145, 40, 40);//sensors
 		
 		if(i.getSensorHealth() > 0){
 			
 			gd.setFont(score);
 			gd.setColor(Color.red);
-			gd.fillArc(topX + 15, topY + 100, 75, 75, (int) i.getVengeanceBearing(), 5);
+			gd.fillArc(topX + 17, topY + 100, 85, 85, (int) i.getVengeanceBearing(), 5);
 			gd.fillArc(topX + 105, topY + 100, 40, 40, 0, i.getVengeanceShields());
 			gd.fillArc(topX + 155, topY + 100, 40, 40, 0, i.getVengeanceHullHealth());
+			gd.setColor(Color.GREEN);
+			gd.fillArc(topX + 105, topY + 145, 40, 40, 0, i.getVengeanceSensors());
+			gd.fillArc(topX + 205, topY + 100, 40, 40, 0, i.getVengeancePhaserLevel());
+			gd.fillArc(topX + 255, topY + 100, 40, 40, 0, i.getVengeancePhotons());
 			gd.setColor(Color.black);
 			gd.drawString(String.format("%.2f", i.getVengeanceBearing()), topX + 28, topY + 125);
 			gd.drawString("Shield", topX + 103, topY + 127);
 			gd.drawString("Hull", topX + 160, topY + 127);
+			gd.drawString("Bearing", topX + 30, topY + 200);
+			gd.drawString("S", topX + 120, topY + 170);
+			gd.drawString("Phas", topX + 207, topY + 127);
+			gd.drawString("Phot", topX + 257, topY + 127);
 			
 			
 			
+		} else {
+			gd.setFont(percentage);
+			gd.drawString("VENGEANCE DATA UNAVAILABLE", topX, topY + 100);
+			gd.drawString("SENSOR ARRAYS NONFUNCTIONAL!", topX, topY + 200);
 		}
 		
 	}
@@ -241,7 +276,7 @@ public class Game extends JPanel {
 		gd.drawString(String.format("%d%%", i.getPhotonHealth()), topX, topY + 50);
 		gd.drawString(String.valueOf(i.getNumPhotons()), topX, topY + 100);
 		
-		if(i.getNumPhotons() >= 32){
+		if(i.getPhotonHealth() >= 32){
 			gd.setColor(new Color(0, 255, 98));
 		} else if(i.getPhotonHealth() >= 16){
 			gd.setColor(new Color(211, 72, 20));
@@ -251,9 +286,9 @@ public class Game extends JPanel {
 		
 		gd.fillRect(topX, topY + 50, i.getPhotonHealth(), 20);
 		
-		if(i.getPhotonHealth() >= 50){
+		if(i.getNumPhotons() >= 50){
 			gd.setColor(new Color(0, 255, 98));
-		} else if(i.getPhotonHealth() >= 25){
+		} else if(i.getNumPhotons() >= 25){
 			gd.setColor(new Color(211, 72, 20));
 		} else {
 			gd.setColor(Color.RED);
@@ -275,7 +310,7 @@ public class Game extends JPanel {
 			gd.setColor(Color.RED);
 		}
 		
-		gd.fillRect(topX, topY + 34, i.getShieldGenHealth(), 20);
+		gd.fillRect(topX, topY + 34, i.getSensorHealth(), 20);
 		
 		gd.setColor(getContrastingColor(bg));
 		gd.setFont(score);
