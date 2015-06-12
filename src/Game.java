@@ -99,6 +99,7 @@ public class Game extends JPanel {
 		JFrame frame = new JFrame("Vengeance HUD");
 		Game window = new Game();
 		frame.add(window);
+		frame.setAutoRequestFocus(false);
 		frame.setAlwaysOnTop(true);
 		
 		//set the window icon
@@ -115,7 +116,8 @@ public class Game extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
-		frame.setLocationRelativeTo(null); //make it open in the center, like everything ought to
+//		frame.setLocationRelativeTo(null); //make it open in the center, like everything ought to
+		frame.setLocation(350, 5);
 		
 		
 		Thread console = new Thread(i);
@@ -133,6 +135,16 @@ public class Game extends JPanel {
 				System.gc();
 				frame.setVisible(false);
 				System.out.println("You survived against the vengeance for " + getSecondsElapsed() + " seconds");
+				System.exit(5);
+				break;
+			}
+			
+			if(i.getVengeanceHullHealth() < 0){
+				console.stop();
+				System.gc();
+				frame.setVisible(false);
+				System.out.println("Well done, captain! You defeated the USS Vengeance. Starfleet will be very pleased with your performance");
+				System.out.println("SCORE: " + Long.MAX_VALUE);
 				System.exit(5);
 				break;
 			}
