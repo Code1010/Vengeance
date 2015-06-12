@@ -133,6 +133,7 @@ public class Game extends JPanel {
 				System.gc();
 				frame.setVisible(false);
 				System.out.println("You survived against the vengeance for " + getSecondsElapsed() + " seconds");
+				System.exit(5);
 				break;
 			}
 		}
@@ -143,7 +144,7 @@ public class Game extends JPanel {
 		super.paint(g);
 		Graphics2D gd = (Graphics2D) g;
 		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		gd.setColor(Color.RED);
+		gd.setColor(Color.white);
 		gd.fillRect(0, 0, 700, 600);
 		
 		if(!drawViewscreen){
