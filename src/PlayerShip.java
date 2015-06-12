@@ -296,8 +296,12 @@ public class PlayerShip extends Ship implements Runnable{
 				impulseHealth *= -1;
 				for(Crewmember c: nearWarpDrive){
 					c.setHealth(c.getHealth() - intensity);
-					if(c.getHealth() <= 0){
-						c.kill();
+				}
+				for(int i = 0; i < nearWarpDrive.size(); ){
+					if(nearWarpDrive.get(i).getHealth() <= 0){
+						nearWarpDrive.remove(i);
+					} else {
+						i++;
 					}
 				}
 				impulseHealth = 0;
@@ -312,8 +316,12 @@ public class PlayerShip extends Ship implements Runnable{
 				warpHealth *= -1;
 				for(Crewmember c: nearWarpDrive){
 					c.setHealth(c.getHealth() - intensity);
-					if(c.getHealth() <= 0){
-						c.kill();
+				}
+				for(int i = 0; i < nearWarpDrive.size(); ){
+					if(nearWarpDrive.get(i).getHealth() <= 0){
+						nearWarpDrive.remove(i);
+					} else {
+						i++;
 					}
 				}
 				warpHealth = 0;
@@ -329,8 +337,12 @@ public class PlayerShip extends Ship implements Runnable{
 				sensorHealth *= -1;
 				for(Crewmember c: nearSensors){
 					c.setHealth(c.getHealth() - intensity);
-					if(c.getHealth() <= 0){
-						c.kill();
+				}
+				for(int i = 0; i < nearSensors.size(); ){
+					if(nearSensors.get(i).getHealth() <= 0){
+						nearSensors.remove(i);
+					} else {
+						i++;
 					}
 				}
 				sensorHealth = 0;
@@ -349,8 +361,12 @@ public class PlayerShip extends Ship implements Runnable{
 				shieldGenHealth *= -1;
 				for(Crewmember c: nearShieldGen){
 					c.setHealth(c.getHealth() - intensity);
-					if(c.getHealth() <= 0){
-						c.kill();
+				}
+				for(int i = 0; i < nearShieldGen.size(); ){
+					if(nearShieldGen.get(i).getHealth() <= 0){
+						nearShieldGen.remove(i);
+					} else {
+						i++;
 					}
 				}
 				shieldGenHealth = 0;
@@ -372,8 +388,12 @@ public class PlayerShip extends Ship implements Runnable{
 				phaserHealth *= -1;
 				for(Crewmember c: nearPhasers){
 					c.setHealth(c.getHealth() - intensity);
-					if(c.getHealth() <= 0){
-						c.kill();
+				}
+				for(int i = 0; i < nearPhasers.size(); ){
+					if(nearPhasers.get(i).getHealth() <= 0){
+						nearPhasers.remove(i);
+					} else {
+						i++;
 					}
 				}
 				phaserHealth = 0;
@@ -388,8 +408,12 @@ public class PlayerShip extends Ship implements Runnable{
 				photonHealth *= -1;
 				for(Crewmember c: nearPhotons){
 					c.setHealth(c.getHealth() - intensity);
-					if(c.getHealth() <= 0){
-						c.kill();
+				}
+				for(int i = 0; i < nearPhotons.size(); ){
+					if(nearPhotons.get(i).getHealth() <= 0){
+						nearPhotons.remove(i);
+					} else {
+						i++;
 					}
 				}
 				photonHealth = 0;
@@ -400,10 +424,8 @@ public class PlayerShip extends Ship implements Runnable{
 			hullIntegrity -= intensity;
 			ret = "the hull";
 		}
-		
 		return system;
 	}
-
 	
 	private String targetRandomSystem(double p) {
 		String[] enemySystems = { "impulse", "warp", "sensor", "shieldGen",
@@ -789,26 +811,26 @@ public class PlayerShip extends Ship implements Runnable{
 				if(vengeanceObject.getPhaserLevel() > 0){
 					int damage = (int)(Math.random() * 100);
 					vengeanceObject.setPhaserLevel(vengeanceObject.getPhaserLevel() - damage);
-					damageRandomSystem(2 * damage);
+					damageRandomSystem(damage);
 				}
 				break;
 			case 3: 
 				if(vengeanceObject.getNumPhotons() > 0){
 					vengeanceObject.setNumPhotons(vengeanceObject.getNumPhotons() - 1);
-					damageRandomSystem(2 * Ship.PHOTON_DAMAGE);
+					damageRandomSystem(Ship.PHOTON_DAMAGE);
 				}
 				break;
 			case 4:
 				if(vengeanceObject.getPhaserLevel() > 0){
 					int power = (int)(Math.random() * 100);
 					vengeanceObject.setPhaserLevel(vengeanceObject.getPhaserLevel() - power);
-					damageRandomSystem(2 * power);
+					damageRandomSystem(power);
 				}
 				break;				
 			}
 			
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(Game.delay);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

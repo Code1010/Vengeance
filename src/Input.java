@@ -92,6 +92,62 @@ public class Input implements Runnable {
 			} else if (command.contains("hail") || command.contains("vengeance")) {
 				System.out
 						.println("Hailing....Captain, the Vengeance is rejecting our communications");
+			} else if (command.contains("shield") && command.contains("fore") && command.contains("full")) {
+				if(getShieldGenHealth() > 0){
+					if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
+						enterprise.setShieldsUp(true);
+						enterprise.setForeShields(100);
+						enterprise.setAftShields(0);
+						enterprise.setRightShields(0);
+						enterprise.setLeftShields(0);
+					} else {
+						System.out.println("No personnel available to operate the shields!");
+					}
+				} else {
+					System.out.println("Shields inoperable, Captain!");
+				}
+			}  else if (command.contains("shield") && command.contains("aft") && command.contains("full")) {
+				if(getShieldGenHealth() > 0){
+					if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
+						enterprise.setShieldsUp(true);
+						enterprise.setForeShields(0);
+						enterprise.setAftShields(100);
+						enterprise.setRightShields(0);
+						enterprise.setLeftShields(0);
+					} else {
+						System.out.println("No personnel available to operate the shields!");
+					}
+				} else {
+					System.out.println("Shields inoperable, Captain!");
+				}
+			}   else if (command.contains("shield") && command.contains("right") && command.contains("full")) {
+					if(getShieldGenHealth() > 0) {
+						if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
+							enterprise.setShieldsUp(true);
+							enterprise.setForeShields(0);
+							enterprise.setAftShields(0);
+							enterprise.setRightShields(100);
+							enterprise.setLeftShields(0);
+						} else {
+							System.out.println("No personnel available to operate the shields!");
+						}
+					} else {
+						System.out.println("Shields inoperable, Captain!");
+					}
+			}   else if (command.contains("shield") && command.contains("left") && command.contains("full")) {
+				if(getShieldGenHealth() > 0){
+					if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
+						enterprise.setShieldsUp(true);
+						enterprise.setForeShields(0);
+						enterprise.setAftShields(0);
+						enterprise.setRightShields(0);
+						enterprise.setLeftShields(100);
+					} else {
+						System.out.println("No personnel available to operate the shields!");
+					}
+				} else {
+					System.out.println("Shields inoperable, Captain!");
+				}
 			} else if (command.contains("shield") && (command.contains("%"))) {
 	
 				if(enterprise.shieldsUp()){ //left shields 100%
@@ -119,53 +175,56 @@ public class Input implements Runnable {
 					}
 					
 					
-					
-					if(side.equals("left")){
-						int totalPercents = (int) (enterprise.getRightShields() + enterprise.getAftShields() + enterprise.getForeShields() + intPercent);
-						int miss = totalPercents - 100;
-						
-						if(miss > 0){
-							enterprise.setLeftShields(intPercent - miss);
+					if(getShieldGenHealth() > 0){
+						if(side.equals("left")){
+							int totalPercents = (int) (enterprise.getRightShields() + enterprise.getAftShields() + enterprise.getForeShields() + intPercent);
+							int miss = totalPercents - 100;
+							
+							if(miss > 0){
+								enterprise.setLeftShields(intPercent - miss);
+							} else {
+								enterprise.setLeftShields(intPercent);
+							}
+							
+						} else if(side.equals("right")){
+							
+							int totalPercents = (int) (enterprise.getLeftShields() + enterprise.getAftShields() + enterprise.getForeShields() + intPercent);
+							int miss = totalPercents - 100;
+							
+							if(miss > 0){
+								enterprise.setRightShields(intPercent - miss);
+							} else {
+								enterprise.setRightShields(intPercent);
+							}
+							
+						} else if(side.equals("aft")) {
+							
+							int totalPercents = (int) (enterprise.getLeftShields() + enterprise.getRightShields() + enterprise.getForeShields() + intPercent);
+							int miss = totalPercents - 100;
+							
+							if(miss > 0){
+								enterprise.setAftShields(intPercent - miss);
+							} else {
+								enterprise.setAftShields(intPercent);
+							}
+							
+						} else if(side.equals("fore")){
+	
+							int totalPercents = (int) (enterprise.getLeftShields() + enterprise.getRightShields() + enterprise.getAftShields() + intPercent);
+							int miss = totalPercents - 100;
+							
+							if(miss > 0){
+								enterprise.setForeShields(intPercent - miss);
+							} else {
+								enterprise.setForeShields(intPercent);
+							}
+							
 						} else {
-							enterprise.setLeftShields(intPercent);
+							System.out.println("Cannot comply: invalid side");
 						}
-						
-					} else if(side.equals("right")){
-						
-						int totalPercents = (int) (enterprise.getLeftShields() + enterprise.getAftShields() + enterprise.getForeShields() + intPercent);
-						int miss = totalPercents - 100;
-						
-						if(miss > 0){
-							enterprise.setRightShields(intPercent - miss);
-						} else {
-							enterprise.setRightShields(intPercent);
-						}
-						
-					} else if(side.equals("aft")) {
-						
-						int totalPercents = (int) (enterprise.getLeftShields() + enterprise.getRightShields() + enterprise.getForeShields() + intPercent);
-						int miss = totalPercents - 100;
-						
-						if(miss > 0){
-							enterprise.setAftShields(intPercent - miss);
-						} else {
-							enterprise.setAftShields(intPercent);
-						}
-						
-					} else if(side.equals("fore")){
-
-						int totalPercents = (int) (enterprise.getLeftShields() + enterprise.getRightShields() + enterprise.getAftShields() + intPercent);
-						int miss = totalPercents - 100;
-						
-						if(miss > 0){
-							enterprise.setForeShields(intPercent - miss);
-						} else {
-							enterprise.setForeShields(intPercent);
-						}
-						
-					} else {
-						System.out.println("Cannot comply: invalid side");
-					}
+				} else {
+					System.out.println("Shields inoperable, Captain!");
+				}
 					
 				} else {
 					System.out.println("Cannot comply: sheields are down");
@@ -347,15 +406,18 @@ public class Input implements Runnable {
 	
 			} else if ((command.contains("raise") || command.contains("up"))
 					&& command.contains("shield")) {
-				
-				if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
-					enterprise.setShieldsUp(true);
-					enterprise.setAftShields(25);
-					enterprise.setForeShields(25);
-					enterprise.setRightShields(25);
-					enterprise.setLeftShields(25);
+				if(getShieldGenHealth() > 0){
+					if(Integer.valueOf(getNearBridge()) + Integer.valueOf(getNearShields()) > 0){
+						enterprise.setShieldsUp(true);
+						enterprise.setAftShields(25);
+						enterprise.setForeShields(25);
+						enterprise.setRightShields(25);
+						enterprise.setLeftShields(25);
+					} else {
+						System.out.println("No personnel available to operate the shields!");
+					}
 				} else {
-					System.out.println("No personnel available to operate the shields!");
+					System.out.println("Shields inoperable, Captain!");
 				}
 	
 			} else if (command.contains("warp")) {
@@ -510,6 +572,10 @@ public class Input implements Runnable {
 	
 	public int getHullHealth(){
 		return (int) enterprise.getHullIntegrity();
+	}
+	
+	public void rechargeVengeancePhasers(){
+		veng.rechargePhasers();
 	}
 	
 	public int getShieldLevel() {

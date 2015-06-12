@@ -105,11 +105,19 @@ public class USSVengeance extends Ship{
 		return ret;
 	}
 
+	public void rechargePhasers(){
+		if(phaserHealth > 0){
+			if(getPhaserLevel() < 360){
+				setPhaserLevel(getPhaserLevel() + 1);
+			}
+		}
+	}
+	
 	public void rechargeShields(){
-		
-		if(shieldIntegrity < 360)
-			shieldIntegrity += .5;
-		
+		if(shieldGenHealth > 0){
+			if(shieldIntegrity < 360)
+				shieldIntegrity += .5;
+		}
 	}
 	
 	public void bear(){

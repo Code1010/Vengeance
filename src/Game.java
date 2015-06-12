@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,6 +25,7 @@ public class Game extends JPanel {
 	final Font score = new Font("Arial Narrow", Font.PLAIN, 20);
 	final Font people = new Font("Arial", Font.ITALIC, 26);
 	static boolean drawViewscreen = false;
+	public static int delay = 500;
 	
 	static Input i = new Input();
 	
@@ -37,6 +39,63 @@ public class Game extends JPanel {
 	}
 	
 	public static void main(String [] args) throws InterruptedException{
+		System.out.println("Select your Level: 1-10");
+		try{
+			Scanner in = new Scanner(System.in);
+			int level = in.nextInt();
+			
+			switch(level){
+				default:
+					level = 10;
+					break;
+				case 0:
+					level = 10;
+					break;
+				case 1:
+					delay = 10000;
+					break;
+				case 2:
+					delay = 9000;
+					break;
+				case 3:
+					delay = 8000;
+					break;
+				case 4: 
+					delay = 7000;
+					break;
+				case 5: 
+					delay = 6000;
+					break;
+				case 6:
+					delay = 5000;
+					break;
+				case 7: 
+					delay = 4000;
+					break;
+				case 8:
+					delay = 3000;
+					break;
+				case 9:
+					delay = 2000;
+					break;
+				case 10: 
+					delay = 1000;
+					System.out.println("Good luck.");
+					break;
+				case 69:
+					delay = 69;
+					System.out.println("Thanks for keeping the level between 1 and 10 (inclusive)");
+					break;
+				case 420:
+					delay = 100;
+					System.out.println("Thanks for keeping the level between 1 and 10 (inclusive)");
+					break;
+			}
+			
+		} catch(Exception e) {
+			System.err.println("Looks like you don't like following directions. This ought to teach you");
+			delay = 250;
+		}
 		JFrame frame = new JFrame("Vengeance HUD");
 		Game window = new Game();
 		frame.add(window);
@@ -68,6 +127,7 @@ public class Game extends JPanel {
 			Thread.sleep(100);
 			i.rechargePhaserBanks();
 			i.rechargeVengeanceShields();
+			i.rechargeVengeancePhasers();
 			if(i.getHullHealth() <= 0){
 				console.stop();
 				System.gc();
@@ -83,7 +143,7 @@ public class Game extends JPanel {
 		super.paint(g);
 		Graphics2D gd = (Graphics2D) g;
 		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		gd.setColor(Color.WHITE);
+		gd.setColor(Color.RED);
 		gd.fillRect(0, 0, 700, 600);
 		
 		if(!drawViewscreen){
